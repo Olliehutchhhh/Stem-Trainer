@@ -144,8 +144,22 @@ header h1{font-family:var(--mono);font-size:clamp(1.5rem,4vw,2.2rem);font-weight
 .solve-progress{font-size:0.68rem;font-family:var(--mono);color:var(--muted2);margin-top:4px;}
 .solve-pip{display:inline-block;width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);margin-right:3px;}
 .solve-pip.filled{background:var(--success);border-color:var(--success);}
-#overlay{display:none;position:fixed;inset:0;z-index:99;}
-#sidebar.open~#overlay,body.sidebar-open #overlay{display:block;}
+#overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,0.5);}
+body{
+  padding-left:calc(56px + 1rem);
+  transition:padding-left 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+@media(max-width:600px){
+  #sidebar{position:fixed;z-index:200;}
+  #sidebar.open{width:80vw;max-width:280px;}
+  #sidebar.open~#overlay{display:block;}
+  body{padding-left:calc(56px + 0.5rem);}
+  body.sb-open{padding-left:calc(56px + 0.5rem);}
+}
+@media(min-width:601px){
+  #overlay{display:none!important;}
+  body.sb-open{padding-left:calc(240px + 1.5rem);}
+}
 </style>
 </head>
 <body>
@@ -963,10 +977,15 @@ const MODE_LABELS={
 };
 
 function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
+  const sb=document.getElementById('sidebar');
+  sb.classList.toggle('open');
+  if(window.innerWidth>600){
+    document.body.classList.toggle('sb-open', sb.classList.contains('open'));
+  }
 }
 function closeSidebar(){
   document.getElementById('sidebar').classList.remove('open');
+  document.body.classList.remove('sb-open');
 }
 function pickMode(m){
   closeSidebar();
