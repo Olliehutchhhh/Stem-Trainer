@@ -12,25 +12,30 @@
   --text:#f0f0f0;--muted:#666;--muted2:#888;
   --accent:#c8f560;--accent-dim:#8aab35;
   --danger:#ff5c5c;--warning:#f0a04b;--success:#4bdd8a;
-  --orange:#ff8c42;
+  --orange:#ff8c42;--blue:#7ec8f0;--purple:#b39dfc;
   --radius:10px;--mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem 4rem}
 header{text-align:center;margin-bottom:2rem}
 header h1{font-family:var(--mono);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:500;color:var(--accent);margin-bottom:0.3rem;letter-spacing:-0.02em}
 header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
-.container{width:100%;max-width:560px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem}
+.container{width:100%;max-width:580px}
+.section-label{font-size:0.68rem;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;margin-top:1.25rem}
+.section-label:first-child{margin-top:0}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.mode-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px}
 .mode-btn{padding:10px 8px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted2);cursor:pointer;font-family:var(--mono);font-size:0.72rem;transition:all 0.15s;text-align:center;line-height:1.5;width:100%}
 .mode-btn:hover{border-color:#3a3a3a;color:var(--text)}
-.mode-btn .mt{font-weight:500;font-size:0.76rem;display:block}
-.mode-btn .ms{font-size:0.67rem;opacity:0.65;display:block;margin-top:2px}
+.mode-btn .mt{font-weight:500;font-size:0.75rem;display:block}
+.mode-btn .ms{font-size:0.65rem;opacity:0.65;display:block;margin-top:2px}
 .mode-btn.ae{border-color:var(--accent);color:var(--accent);background:#1a200a}
-.mode-btn.ah{border-color:#7ec8f0;color:#7ec8f0;background:#0a1520}
+.mode-btn.ah{border-color:var(--blue);color:var(--blue);background:#0a1520}
+.mode-btn.amc{border-color:var(--purple);color:var(--purple);background:#120f1f}
 .mode-btn.awe{border-color:var(--orange);color:var(--orange);background:#1f130a}
 .mode-btn.awh{border-color:var(--danger);color:var(--danger);background:#1f0a0a}
+.mode-btn.awmc{border-color:#c084f5;color:#c084f5;background:#180f22}
 .wb{display:inline-block;background:#2a1a0a;color:var(--orange);border:1px solid #4a2a10;border-radius:20px;font-size:0.65rem;padding:1px 7px;margin-left:5px;vertical-align:middle}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem;margin-top:1.25rem}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center}
 .stat-label{font-size:0.68rem;color:var(--muted2);font-family:var(--mono);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em}
 .stat-val{font-size:1.4rem;font-weight:500;font-family:var(--mono)}
@@ -39,8 +44,10 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
 .badge{display:inline-block;border-radius:6px;font-size:0.7rem;font-family:var(--mono);padding:3px 10px;margin-bottom:0.75rem}
 .bff{background:#1a0f0f;color:#ff9a6c;border:1px solid #5a2a1a}
 .bwr{background:#1f130a;color:var(--orange);border:1px solid #5a2a10}
+.bmc{background:#120f1f;color:var(--purple);border:1px solid #4a3a7a}
 #base-display{font-family:var(--mono);font-size:clamp(1.1rem,3vw,1.5rem);font-weight:500;color:var(--text);line-height:1.6;word-break:break-all}
 .nl{display:inline-block;background:#1a200a;color:var(--accent);border:1px solid var(--accent-dim);border-radius:6px;padding:1px 8px;font-size:0.9em;margin:0 2px}
+.nl-purple{display:inline-block;background:#1a1030;color:var(--purple);border:1px solid #6a4aaa;border-radius:6px;padding:1px 8px;font-size:0.9em;margin:0 2px}
 #scrambled-display{font-family:var(--mono);font-size:clamp(1.3rem,4vw,1.9rem);font-weight:500;color:var(--text);letter-spacing:0.15em;word-break:break-all}
 .timer-row{display:flex;align-items:center;gap:12px;margin-bottom:0.75rem}
 .timer-num{font-family:var(--mono);font-size:0.85rem;color:var(--muted2);min-width:26px;text-align:right}
@@ -62,14 +69,15 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
 .btn{padding:9px 18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted2);cursor:pointer;font-family:var(--mono);font-size:0.78rem;transition:all 0.15s}
 .btn:hover{border-color:#3a3a3a;color:var(--text)}
 .btn:active{transform:scale(0.97)}
-.btn-go{border-color:var(--accent-dim);color:var(--accent);background:#1a200a}
-.btn-go:hover{background:#202b0d}
-#progress-bar-wrap{height:2px;background:var(--surface2);border-radius:1px;margin-bottom:1.5rem;overflow:hidden}
+#progress-bar-wrap{height:2px;background:var(--surface2);border-radius:1px;margin-bottom:0;overflow:hidden;margin-top:1.25rem}
 #progress-bar{height:2px;background:var(--border);border-radius:1px;transition:width 0.4s}
 #empty-state{text-align:center;padding:2.5rem 1rem;font-family:var(--mono);color:var(--muted2);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;display:none}
 #empty-state p:first-child{font-size:0.9rem;color:var(--text);margin-bottom:0.5rem}
 #empty-state p{font-size:0.78rem}
 #empty-state span{color:var(--accent)}
+.solve-progress{font-size:0.68rem;font-family:var(--mono);color:var(--muted2);margin-top:4px}
+.solve-pip{display:inline-block;width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);margin-right:3px}
+.solve-pip.filled{background:var(--success);border-color:var(--success)}
 </style>
 </head>
 <body>
@@ -78,6 +86,8 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
   <p>word + letter → anagram</p>
 </header>
 <div class="container">
+
+  <div class="section-label">my list</div>
   <div class="mode-grid">
     <button class="mode-btn ae" id="btn-easy" onclick="setMode('easy')">
       <span class="mt">easy</span><span class="ms">word + letter · 10s</span>
@@ -85,13 +95,25 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
     <button class="mode-btn" id="btn-hard" onclick="setMode('hard')">
       <span class="mt">hard</span><span class="ms">all scrambled · 30s</span>
     </button>
+  </div>
+
+  <div class="section-label" style="margin-top:1rem">most common</div>
+  <div class="mode-grid">
+    <button class="mode-btn" id="btn-mc-easy" onclick="setMode('mc-easy')">
+      <span class="mt">easy</span><span class="ms">word + letter · 10s</span>
+    </button>
+    <button class="mode-btn" id="btn-mc-hard" onclick="setMode('mc-hard')">
+      <span class="mt">hard</span><span class="ms">all scrambled · 30s</span>
+    </button>
+  </div>
+
+  <div class="section-label" style="margin-top:1rem">incorrect <span class="wb" id="wb-all">0</span></div>
+  <div class="mode-grid">
     <button class="mode-btn" id="btn-wrong-easy" onclick="setMode('wrong-easy')">
-      <span class="mt">easy — incorrect <span class="wb" id="wb-easy">0</span></span>
-      <span class="ms">word + letter · 10s</span>
+      <span class="mt">easy</span><span class="ms">word + letter · 10s</span>
     </button>
     <button class="mode-btn" id="btn-wrong-hard" onclick="setMode('wrong-hard')">
-      <span class="mt">hard — incorrect <span class="wb" id="wb-hard">0</span></span>
-      <span class="ms">all scrambled · 30s</span>
+      <span class="mt">hard</span><span class="ms">all scrambled · 30s</span>
     </button>
   </div>
 
@@ -105,7 +127,7 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
 
   <div id="empty-state">
     <p>no incorrect answers yet</p>
-    <p>play <span>easy</span> or <span>hard</span> mode — any miss or reveal gets saved here</p>
+    <p>play any mode — misses and reveals get saved here</p>
   </div>
 
   <div id="game-area">
@@ -113,8 +135,10 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
       <div class="card-label" id="puzzle-label">base word</div>
       <div id="badge-ff" class="badge bff" style="display:none">false friend</div>
       <div id="badge-wr" class="badge bwr" style="display:none">from incorrect list</div>
+      <div id="badge-mc" class="badge bmc" style="display:none">most common</div>
       <div id="easy-section"><div id="base-display"></div></div>
       <div id="hard-section" style="display:none"><div id="scrambled-display"></div></div>
+      <div class="solve-progress" id="solve-progress" style="display:none"></div>
     </div>
 
     <div class="card">
@@ -138,7 +162,8 @@ header p{font-size:0.78rem;color:var(--muted2);font-family:var(--mono)}
 </div>
 
 <script>
-const RAW=[
+// ── STANDARD PUZZLES ──────────────────────────────────────────────────────────
+const STANDARD=[
 ["rationed","s",["notarised","ordinates"],false],
 ["rationed","z",["notarized"],false],
 ["seating","r",["angriest"],false],
@@ -488,82 +513,416 @@ const RAW=[
 ["orations","b",["abortions"],false]
 ];
 
+// ── MOST COMMON PUZZLES ───────────────────────────────────────────────────────
+const MOST_COMMON=[
+["goatier","v",["ravigote"],false],
+["atonies","b",["botanise"],false],
+["atonies","c",["sonicate"],false],
+["atonies","d",["sedation"],false],
+["atonies","l",["toenails"],false],
+["atonies","m",["moaniest","amniotes"],false],
+["atonies","n",["enations","sonatine"],false],
+["atonies","r",["notarise"],false],
+["asteroid","l",["idolaters"],false],
+["asteroid","m",["mediator"],false],
+["asteroid","n",["notarised"],false],
+["asteroid","s",["asteroids"],false],
+["asteroid","t",["storiated"],false],
+["asteroid","v",["deviators"],false],
+["ratioed","l",["idolater"],false],
+["ratioed","m",["mediator"],false],
+["ratioed","s",["asteroid"],false],
+["ratioed","v",["deviator"],false],
+["rationed","c",["redaction"],false],
+["rationed","p",["predation"],false],
+["rationed","s",["notarised"],false],
+["rationed","y",["arytenoid"],false],
+["rationed","z",["notarized"],false],
+["adipose","l",["elasipod"],false],
+["adipose","r",["parodies"],false],
+["adipose","t",["dioptase"],false],
+["iodates","g",["godetias"],false],
+["iodates","l",["isolated","diastole","sodalite"],false],
+["iodates","m",["atomised"],false],
+["iodates","n",["sedation"],false],
+["iodates","p",["dioptase"],false],
+["iodates","r",["asteroid"],false],
+["soapier","d",["parodies"],false],
+["soapier","h",["aphorise"],false],
+["soapier","l",["polarise"],false],
+["soapier","v",["vaporise"],false],
+["resonate","d",["resonated"],false],
+["resonate","p",["personate"],false],
+["resonate","s",["resonates"],false],
+["resonate","v",["renovates"],false],
+["resonate","w",["stoneware"],false],
+["auditor","n",["duration"],false],
+["auditor","s",["auditors"],false],
+["auditor","y",["auditory"],false],
+["autopen","i",["eutopian"],false],
+["autopen","s",["autopens"],false],
+["rosaline","c",["loniceras"],false],
+["rosaline","g",["regionals"],false],
+["rosaline","m",["normalise"],false],
+["rosaline","o",["erosional"],false],
+["rosaline","s",["sensorial"],false],
+["rosaline","t",["relations"],false],
+["notarise","a",["aerations"],false],
+["notarise","b",["baritones"],false],
+["notarise","c",["reactions"],false],
+["notarise","d",["notarised"],false],
+["notarise","h",["senhorita","hortensia"],false],
+["notarise","i",["seriation"],false],
+["notarise","l",["relations"],false],
+["notarise","p",["patronise"],false],
+["notarise","s",["notarises"],false],
+["notarise","r",["serration"],false],
+["notarise","z",["notarizes"],false],
+["outride","n",["routined"],false],
+["outride","s",["outsider"],false],
+["outride","v",["outdrive"],false],
+["soutane","m",["seamount"],false],
+["soutane","n",["tonneaus"],false],
+["soutane","p",["autopens"],false],
+["soutane","s",["soutanes"],false],
+["anodiser","g",["organised","organdies"],false],
+["anodiser","m",["randomise","romanised"],false],
+["anodiser","s",["anodisers"],false],
+["anodiser","t",["notarised","ordinates"],false],
+["anodiser","z",["anodizers"],false],
+["aroused","c",["caroused"],false],
+["aroused","l",["roulades"],false],
+["aroused","t",["readouts"],false],
+["aroused","v",["savoured"],false],
+["toenails","c",["sectional","coastline"],false],
+["toenails","g",["legations"],false],
+["toenails","h",["hailstone"],false],
+["toenails","n",["tensional"],false],
+["toenails","p",["sealpoint"],false],
+["toenails","r",["relations"],false],
+["toenails","t",["tonalites"],false],
+["osteria","d",["asteroid"],false],
+["osteria","h",["hoariest"],false],
+["osteria","m",["atomiser"],false],
+["osteria","n",["notarise"],false],
+["osteria","r",["rotaries"],false],
+["osteria","s",["osterias","roasties"],false],
+["osteria","t",["toastier"],false],
+["godetias","m",["dogmatise"],false],
+["goutier","l",["trilogue"],false],
+["goutier","n",["routeing"],false],
+["radiole","s",["radioles","darioles"],false],
+["radiole","t",["idolater","tailored"],false],
+["radiole","v",["overlaid"],false],
+["sedation","b",["botanised"],false],
+["sedation","c",["sonicated"],false],
+["sedation","m",["dominates","staminode"],false],
+["sedation","n",["antinodes"],false],
+["sedation","p",["antipodes"],false],
+["sedation","r",["notarised","ordinates"],false],
+["sedation","t",["stationed","antidotes"],false],
+["sedation","v",["donatives"],false],
+["atomiser","a",["aromatise"],false],
+["atomiser","d",["mediators","amortised"],false],
+["atomiser","s",["atomisers"],false],
+["atomiser","t",["estimator"],false],
+["atomiser","z",["atomizers"],false],
+["rogaines","d",["organised"],false],
+["rogaines","l",["regionals"],false],
+["rogaines","n",["reasoning"],false],
+["rogaines","r",["organiser"],false],
+["rogaines","s",["organises"],false],
+["relation","a",["rationale"],false],
+["relation","f",["reflation"],false],
+["relation","h",["lionheart"],false],
+["relation","s",["relations"],false],
+["outliers","f",["flouriest"],false],
+["outliers","g",["trilogues"],false],
+["outliers","n",["outliners"],false],
+["readouts","c",["educators","croustade"],false],
+["readouts","p",["outspread"],false],
+["readouts","t",["outstared"],false],
+["odonate","r",["ratooned"],false],
+["odonate","s",["odonates"],false],
+["routines","c",["countries","cretinous","neurotics"],false],
+["routines","i",["routinise"],false],
+["routines","j",["jointures"],false],
+["routines","l",["outliners"],false],
+["routines","n",["neutrinos"],false],
+["routines","p",["eruptions"],false],
+["routines","t",["ritenutos"],false],
+["evasion","r",["aversion"],false],
+["evasion","s",["evasions"],false],
+["retinol","a",["relation"],false],
+["retinol","u",["outliner"],false],
+["urinates","b",["urbanites"],false],
+["urinates","d",["indurates"],false],
+["urinates","g",["signature"],false],
+["urinates","m",["ruminates"],false],
+["urinates","n",["saturnine"],false],
+["tailored","f",["floriated"],false],
+["tailored","i",["editorial"],false],
+["tailored","p",["depilator"],false],
+["tailored","s",["idolaters","steroidal"],false],
+["sodalite","c",["dislocate"],false],
+["sodalite","p",["spoliated"],false],
+["sodalite","r",["idolaters","steroidal"],false],
+["sodalite","t",["totalised"],false],
+["sodalite","u",["outsailed"],false],
+["sodalite","v",["dovetails"],false],
+["muriate","n",["ruminate"],false],
+["muriate","s",["muriates"],false],
+["loamier","m",["memorial"],false],
+["loamier","s",["moralise"],false],
+["loamier","z",["moralize"],false],
+["lousier","l",["rouilles"],false],
+["lousier","p",["perilous"],false],
+["lousier","t",["outliers"],false],
+["rotaries","r",["serration"],false],
+["rotaries","o",["oratories"],false],
+["sauteed","c",["educates"],false],
+["sauteed","n",["unseated"],false],
+["rogaine","d",["organdie"],false],
+["rogaine","l",["regional"],false],
+["rogaine","s",["rogaines","organise"],false],
+["rogaine","z",["organize"],false],
+["rainout","c",["curation"],false],
+["rainout","d",["duration"],false],
+["rainout","s",["rainouts"],false],
+["dioptase","l",["spoliated"],false],
+["dioptase","n",["antipodes"],false],
+["dioptase","u",["autopsied"],false],
+["residua","d",["radiused"],false],
+["residua","l",["residual"],false],
+["residua","n",["denarius"],false],
+["residua","p",["upraised"],false],
+["nemesia","s",["nemesias"],false],
+["nemesia","t",["matinees"],false],
+["nemesia","x",["examines"],false],
+["organdie","l",["reloading"],false],
+["organdie","s",["organdies","organised"],false],
+["organdie","z",["organized"],false],
+["toenail","g",["legation"],false],
+["toenail","r",["relation"],false],
+["toenail","s",["toenails"],false],
+["toenail","t",["tonalite"],false],
+["soapie","d",["adipose"],false],
+["soapie","r",["soapier"],false],
+["soapie","t",["opiates"],false],
+["tedious","h",["hideouts"],false],
+["tedious","l",["solitude"],false],
+["tedious","r",["outsider"],false],
+["tedious","s",["outsides"],false],
+["oleates","d",["desolate"],false],
+["oleates","r",["oleaster"],false],
+["radiomen","h",["rhodamine"],false],
+["radiomen","s",["randomise","romanised"],false],
+["radiomen","z",["randomize","romanized"],false],
+["araneid","c",["radiance"],false],
+["araneid","g",["drainage"],false],
+["araneid","m",["marinade"],false],
+["araneid","s",["araneids"],false],
+["agonise","b",["begonias"],false],
+["agonise","c",["coinages"],false],
+["agonise","d",["agonised","diagnose"],false],
+["agonise","l",["gasoline"],false],
+["agonise","r",["rogaines","organise"],false],
+["agonise","s",["agonises"],false],
+["agonise","z",["agonizes"],false],
+["opiated","l",["petaloid"],false],
+["opiated","n",["antipode"],false],
+["opiated","s",["dioptase"],false],
+["opiated","v",["adoptive"],false],
+["radioles","m",["moralised"],false],
+["radioles","p",["polarised"],false],
+["radioles","s",["solarised"],false],
+["radioles","t",["idolaters","steroidal"],false],
+["radioles","v",["valorised"],false],
+["radioles","z",["solarized"],false],
+["reasoned","c",["coarsened"],false],
+["reasoned","h",["hoarsened"],false],
+["reasoned","l",["oleanders"],false],
+["reasoned","t",["resonated"],false],
+["romaine","d",["radiomen"],false],
+["romaine","s",["romaines","moraines","romanise"],false],
+["romaine","w",["airwomen"],false],
+["romaine","z",["romanize"],false],
+["opiates","d",["dioptase"],false],
+["opiates","l",["spoliate"],false],
+["opiates","s",["soapiest"],false],
+["diagnose","d",["diagnosed"],false],
+["diagnose","l",["alongside"],false],
+["diagnose","r",["organised","organdies"],false],
+["diagnose","s",["diagnoses"],false],
+["auditors","a",["sudatoria"],false],
+["auditors","n",["durations"],false],
+["outearns","a",["aeronauts"],false],
+["outearns","c",["courtesan","courantes"],false],
+["outearns","g",["outranges"],false],
+["mediator","s",["mediators","amortised"],false],
+["mediator","t",["meditator"],false],
+["rainouts","c",["curations"],false],
+["rainouts","d",["durations"],false],
+["rainouts","l",["insulator"],false],
+["rainouts","p",["supinator"],false],
+["denarius","b",["urbanised"],false],
+["denarius","f",["fundraise"],false],
+["denarius","l",["laundries"],false],
+["denarius","m",["nursemaid"],false],
+["denarius","t",["indurates"],false],
+["romanise","d",["romanised","randomise"],false],
+["romanise","h",["harmonies","harmonise"],false],
+["romanise","l",["normalise","almonries"],false],
+["romanise","s",["romanises"],false],
+["romanise","w",["womaniser"],false],
+["romanise","z",["romanizes"],false],
+["amniotes","a",["anatomise","anatomies"],false],
+["amniotes","d",["dominates","staminode"],false],
+["amniotes","f",["manifesto"],false],
+["amniotes","m",["ammonites"],false],
+["amniotes","n",["nominates"],false],
+["amniotes","p",["ptomaines"],false],
+["aileron","c",["lonicera","colinear"],false],
+["aileron","g",["regional"],false],
+["aileron","s",["rosaline","ailerons"],false],
+["aileron","t",["relation","oriental"],false],
+["aileron","v",["overlain"],false],
+["routined","c",["reduction","introduce"],false],
+["routined","d",["outridden"],false],
+["routined","g",["detouring"],false],
+["routined","i",["erudition"],false],
+["routined","v",["outdriven"],false]
+];
+
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
-const puzzles=RAW.filter(p=>{
-  if(p[3])return true;
-  const src=(p[0]+p[1]).toLowerCase().split("").sort().join("");
-  return p[2].some(a=>a.toLowerCase().split("").sort().join("")===src);
-});
+function filterValid(arr){
+  return arr.filter(p=>{
+    if(p[3])return true;
+    const src=(p[0]+p[1]).toLowerCase().split("").sort().join("");
+    return p[2].some(a=>a.toLowerCase().split("").sort().join("")===src);
+  });
+}
 
-const WRONG_KEY='stemming_wrong_v2';
+const stdPuzzles=filterValid(STANDARD);
+const mcPuzzles=filterValid(MOST_COMMON);
+
+// ── WRONG LIST (shared, with solve counts) ────────────────────────────────────
+const WRONG_KEY='stemming_wrong_v3';
+const SOLVE_KEY='stemming_solves_v3';
+
 function loadWrong(){try{return JSON.parse(localStorage.getItem(WRONG_KEY)||'[]')}catch(e){return[]}}
 function saveWrong(a){localStorage.setItem(WRONG_KEY,JSON.stringify(a))}
+function loadSolves(){try{return JSON.parse(localStorage.getItem(SOLVE_KEY)||'{}')}catch(e){return{}}}
+function saveSolves(o){localStorage.setItem(SOLVE_KEY,JSON.stringify(o))}
+
 function pkey(p){return p[0]+'||'+p[1]+'||'+p[2].join(',')}
+
 function addToWrong(p){
   const arr=loadWrong(),k=pkey(p);
   if(!arr.find(x=>pkey(x)===k)){arr.push(p);saveWrong(arr);}
   updateBadges();
 }
-function updateBadges(){
-  const n=loadWrong().length;
-  document.getElementById('wb-easy').textContent=n;
-  document.getElementById('wb-hard').textContent=n;
+
+function recordCorrect(p){
+  const k=pkey(p);
+  const solves=loadSolves();
+  solves[k]=(solves[k]||0)+1;
+  if(solves[k]>=2){
+    // remove from wrong list
+    const arr=loadWrong().filter(x=>pkey(x)!==k);
+    saveWrong(arr);
+    delete solves[k];
+  }
+  saveSolves(solves);
+  updateBadges();
 }
 
-const TMAX={'easy':10,'hard':30,'wrong-easy':10,'wrong-hard':30};
-const ISCRAM={'easy':false,'hard':true,'wrong-easy':false,'wrong-hard':true};
+function getSolveCount(p){
+  const solves=loadSolves();
+  return solves[pkey(p)]||0;
+}
+
+function updateBadges(){
+  const n=loadWrong().length;
+  document.getElementById('wb-all').textContent=n;
+}
+
+// ── MODE CONFIG ───────────────────────────────────────────────────────────────
+const TMAX={'easy':10,'hard':30,'mc-easy':10,'mc-hard':30,'wrong-easy':10,'wrong-hard':30};
+const ISCRAM={'easy':false,'hard':true,'mc-easy':false,'mc-hard':true,'wrong-easy':false,'wrong-hard':true};
+const ISWRONG={'wrong-easy':true,'wrong-hard':true};
+const ISMC={'mc-easy':true,'mc-hard':true};
 const TYPING_WINDOW=5;
 
 let mode='easy';
-let mainOrd=shuffle([...Array(puzzles.length).keys()]);
-let wrongOrd=[];
+let orders={easy:[],hard:[],'mc-easy':[],'mc-hard':[],'wrong-easy':[],'wrong-hard':[]};
 let idx=0,score=0,streak=0,roundNum=1;
 let mainIv=null,typingIv=null;
 let mainTime=10,typingTime=TYPING_WINDOW;
-let phase='main'; // 'main' | 'typing' | 'done'
+let phase='main';
 let current=null;
 
-function isWrong(){return mode==='wrong-easy'||mode==='wrong-hard';}
+function getBaseList(m){
+  if(ISWRONG[m])return loadWrong();
+  if(ISMC[m])return mcPuzzles;
+  return stdPuzzles;
+}
+
+function resetOrder(m){
+  const list=getBaseList(m);
+  orders[m]=shuffle([...Array(list.length).keys()]);
+}
 
 function setMode(m){
   mode=m;
-  ['easy','hard','wrong-easy','wrong-hard'].forEach(id=>{
-    document.getElementById('btn-'+id).className='mode-btn';
+  const cls={
+    'easy':'ae','hard':'ah',
+    'mc-easy':'amc','mc-hard':'amc',
+    'wrong-easy':'awe','wrong-hard':'awh'
+  };
+  ['easy','hard','mc-easy','mc-hard','wrong-easy','wrong-hard'].forEach(id=>{
+    const el=document.getElementById('btn-'+id);
+    if(el){el.className='mode-btn';}
   });
-  const cls={'easy':'ae','hard':'ah','wrong-easy':'awe','wrong-hard':'awh'};
-  document.getElementById('btn-'+m).classList.add(cls[m]);
+  const el=document.getElementById('btn-'+m);
+  if(el)el.classList.add(cls[m]);
+
   score=0;streak=0;roundNum=1;idx=0;
   document.getElementById('score').textContent=0;
   document.getElementById('streak').textContent=0;
-  if(isWrong()){
+
+  if(ISWRONG[m]){
     const w=loadWrong();
     if(w.length===0){
       document.getElementById('game-area').style.display='none';
       document.getElementById('empty-state').style.display='block';
       return;
     }
-    wrongOrd=shuffle([...Array(w.length).keys()]);
-  } else {
-    mainOrd=shuffle([...Array(puzzles.length).keys()]);
   }
   document.getElementById('game-area').style.display='';
   document.getElementById('empty-state').style.display='none';
+  resetOrder(m);
   loadPuzzle();
 }
 
-function getList(){return isWrong()?loadWrong():puzzles;}
-function getOrd(){return isWrong()?wrongOrd:mainOrd;}
 function scramble(s){return shuffle(s.toUpperCase().split("")).join(" ");}
 
 function loadPuzzle(){
-  const list=getList(),ord=getOrd();
-  if(idx>=ord.length){
-    if(isWrong())wrongOrd=shuffle([...Array(list.length).keys()]);
-    else mainOrd=shuffle([...Array(puzzles.length).keys()]);
-    idx=0;
+  const list=getBaseList(mode);
+  if(!orders[mode]||orders[mode].length===0)resetOrder(mode);
+  if(idx>=orders[mode].length){resetOrder(mode);idx=0;}
+
+  // refresh list for wrong mode (may have changed)
+  const freshList=getBaseList(mode);
+  if(freshList.length===0){
+    document.getElementById('game-area').style.display='none';
+    document.getElementById('empty-state').style.display='block';
+    return;
   }
-  current=getList()[getOrd()[idx]];
+  if(idx>=orders[mode].length){resetOrder(mode);idx=0;}
+  current=getBaseList(mode)[orders[mode][idx]];
+
   phase='main';
   clearInterval(mainIv);clearInterval(typingIv);
   mainTime=TMAX[mode];typingTime=TYPING_WINDOW;
@@ -579,8 +938,22 @@ function loadPuzzle(){
   document.getElementById('typing-ind').className='typing-indicator';
 
   const ff=current[3];
+  const isWrong=!!ISWRONG[mode];
+  const isMC=!!ISMC[mode];
+
   document.getElementById('badge-ff').style.display=ff?'inline-block':'none';
-  document.getElementById('badge-wr').style.display=isWrong()?'inline-block':'none';
+  document.getElementById('badge-wr').style.display=isWrong?'inline-block':'none';
+  document.getElementById('badge-mc').style.display=(!isWrong&&isMC)?'inline-block':'none';
+
+  // solve progress for wrong mode
+  const sp=document.getElementById('solve-progress');
+  if(isWrong){
+    const n=getSolveCount(current);
+    sp.style.display='block';
+    sp.innerHTML=`<span class="solve-pip ${n>=1?'filled':''}"></span><span class="solve-pip ${n>=2?'filled':''}"></span> ${n}/2 correct to remove`;
+  } else {
+    sp.style.display='none';
+  }
 
   if(!ISCRAM[mode]){
     document.getElementById('easy-section').style.display='';
@@ -589,7 +962,8 @@ function loadPuzzle(){
     if(ff){
       document.getElementById('base-display').textContent=current[0].toUpperCase();
     } else {
-      const badges=current[1].toUpperCase().split("").map(l=>`<span class="nl">${l}</span>`).join('');
+      const nlClass=isMC&&!isWrong?'nl-purple':'nl';
+      const badges=current[1].toUpperCase().split("").map(l=>`<span class="${nlClass}">${l}</span>`).join('');
       document.getElementById('base-display').innerHTML=current[0].toUpperCase()+' + '+badges;
     }
   } else {
@@ -599,12 +973,12 @@ function loadPuzzle(){
     document.getElementById('scrambled-display').textContent=scramble(current[0]+current[1]);
   }
 
-  updateBar(mainTime,TMAX[mode]);
   document.getElementById('timer-num').textContent=Math.ceil(mainTime);
+  updateBar(mainTime,TMAX[mode]);
   mainIv=setInterval(tickMain,100);
   inp.focus();
 
-  const total=getList().length;
+  const total=getBaseList(mode).length;
   document.getElementById('progress-bar').style.width=Math.round((idx/Math.max(total,1))*100)+'%';
 }
 
@@ -665,10 +1039,7 @@ function setFb(txt,cls){
 document.getElementById('answer-input').addEventListener('input',function(){
   if(phase==='done')return;
   const val=this.value.trim().toLowerCase();
-  if(val.length>0 && phase==='main') startTypingPhase();
-  if(val.length===0 && phase==='typing'){
-    // cleared — don't resume main, keep typing window
-  }
+  if(val.length>0&&phase==='main')startTypingPhase();
   if(current[2].map(a=>a.toLowerCase()).includes(val)){
     clearInterval(mainIv);clearInterval(typingIv);
     phase='done';score++;streak++;
@@ -679,6 +1050,7 @@ document.getElementById('answer-input').addEventListener('input',function(){
     document.getElementById('typing-ind').textContent='';
     updateBar(1,1);
     document.getElementById('timer-num').textContent='✓';
+    if(ISWRONG[mode])recordCorrect(current);
     setTimeout(nextPuzzle,700);
   }
 });
@@ -699,7 +1071,7 @@ function revealAnswer(){
 function nextPuzzle(){idx++;roundNum++;loadPuzzle();}
 
 updateBadges();
-loadPuzzle();
+setMode('easy');
 </script>
 </body>
 </html>
