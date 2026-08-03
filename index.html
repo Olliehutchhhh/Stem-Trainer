@@ -172,26 +172,54 @@ body{
     <span id="sidebar-toggle-label">modes</span>
   </div>
   <div id="sidebar-content">
-    <div class="sb-section">my list</div>
+    <div class="sb-section">my list 1 <span style="opacity:0.5;font-weight:400">· 347</span></div>
     <button class="sb-btn active-easy" id="btn-easy" onclick="pickMode('easy')">
       <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
     </button>
     <button class="sb-btn" id="btn-hard" onclick="pickMode('hard')">
       <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
     </button>
-    <div class="sb-section">most common</div>
+    <div class="sb-section">my list 2 <span style="opacity:0.5;font-weight:400">· 62</span></div>
+    <button class="sb-btn" id="btn-ml2-easy" onclick="pickMode('ml2-easy')">
+      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
+    </button>
+    <button class="sb-btn" id="btn-ml2-hard" onclick="pickMode('ml2-hard')">
+      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
+    </button>
+    <div class="sb-section">my list — all <span style="opacity:0.5;font-weight:400">· 409</span></div>
+    <button class="sb-btn" id="btn-all-easy" onclick="pickMode('all-easy')">
+      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
+    </button>
+    <button class="sb-btn" id="btn-all-hard" onclick="pickMode('all-hard')">
+      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
+    </button>
+    <div class="sb-section">most common — stemming <span style="opacity:0.5;font-weight:400">· 277</span></div>
     <button class="sb-btn" id="btn-mc-easy" onclick="pickMode('mc-easy')">
       <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
     </button>
     <button class="sb-btn" id="btn-mc-hard" onclick="pickMode('mc-hard')">
       <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
     </button>
-    <div class="sb-section">incorrect <span class="wb" id="wb-all">0</span></div>
+    <div class="sb-section">common countdown words <span style="opacity:0.5;font-weight:400">· 701</span></div>
+    <button class="sb-btn" id="btn-ccw-easy" onclick="pickMode('ccw-easy')">
+      <span class="sb-name">easy</span><span class="sb-sub">unscramble · 10s</span>
+    </button>
+    <button class="sb-btn" id="btn-ccw-hard" onclick="pickMode('ccw-hard')">
+      <span class="sb-name">hard</span><span class="sb-sub">9 letters · 30s</span>
+    </button>
+    <div class="sb-section">incorrect — stemming <span class="wb" id="wb-stemming">0</span></div>
     <button class="sb-btn" id="btn-wrong-easy" onclick="pickMode('wrong-easy')">
       <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
     </button>
     <button class="sb-btn" id="btn-wrong-hard" onclick="pickMode('wrong-hard')">
       <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
+    </button>
+    <div class="sb-section">incorrect <span class="wb" id="wb-ccw">0</span></div>
+    <button class="sb-btn" id="btn-cwrong-easy" onclick="pickMode('cwrong-easy')">
+      <span class="sb-name">easy</span><span class="sb-sub">unscramble · 10s</span>
+    </button>
+    <button class="sb-btn" id="btn-cwrong-hard" onclick="pickMode('cwrong-hard')">
+      <span class="sb-name">hard</span><span class="sb-sub">9 letters · 30s</span>
     </button>
   </div>
 </div>
@@ -891,6 +919,73 @@ const MOST_COMMON=[
 ];
 
 const DEFS={
+  'ADAPTIVE': 'relating to or marked by adaptation',
+  'AGRESTIC': 'relating to the fields or countryside; rustic',
+  'APTEROUS': 'having no wings',
+  'BEASTLIER': 'more unpleasant or unkind',
+  'BLEARIEST': 'most tired and bleary-eyed',
+  'BODEGA': 'a small grocery store; a cellar for storing wine',
+  'BRAINCASE': 'the part of the skull enclosing the brain',
+  'CARBINES': 'short lightweight rifles used by cavalry',
+  'CENTAURS': 'mythological creatures half human and half horse',
+  'CHAMETZ': 'food that is not kosher for Passover, containing leavening',
+  'DEMOUNTS': 'removes something from its support or frame',
+  'DOMINEE': 'a clergyman in some South African churches',
+  'DOORNAILS': 'large-headed nails used on doors; as dead as a doornail',
+  'DOSIMETER': 'a device for measuring absorbed radiation dose',
+  'DUNGEON': 'a dark underground cell used as a prison',
+  'DUNNAGE': 'loose wood or matting used to protect cargo; informal for baggage',
+  'EMANATORS': 'things that emanate or give off something',
+  'EPIMERON': 'the posterior part of the side of a thoracic segment in insects',
+  'ESTIMABLE': 'worthy of great respect; able to be estimated',
+  'FAUCES': 'the arched opening at the back of the mouth',
+  'FIRENADOS': 'rare weather phenomena combining fire and tornado',
+  'FLOATERS': 'people who move frequently; specks seen drifting across one\'s vision',
+  'FOUNTAINS': 'ornamental structures producing jets of water',
+  'FRUCTOSE': 'a simple sugar found in fruit and honey',
+  'GARAGED': 'put a vehicle into a garage',
+  'GLUTEI': 'plural of gluteus; the large muscles of the buttocks',
+  'GUNNERAS': 'large-leaved plants of boggy habitats',
+  'GUNROOM': 'a room in a warship for junior officers',
+  'IMPERIAL': 'relating to an empire or emperor; of superior size or quality',
+  'INCREASES': 'becomes or makes greater in size, amount or degree',
+  'JACONET': 'a lightweight cotton cloth',
+  'LIBERATES': 'frees someone from imprisonment or oppression',
+  'LODESTAR': 'a star used as a point of reference in navigation; a guiding principle',
+  'LORINERS': 'makers of metal parts for horse harnesses',
+  'MACARONI': 'a type of pasta in short tubes; an 18th-century dandy',
+  'MADDERS': 'plants of the genus Rubia used to make red dye',
+  'MAROONS': 'a dark brownish-red colour; fireworks used as distress signals',
+  'MONSTERA': 'a tropical plant with large split leaves popular as a houseplant',
+  'MUTATION': 'the action of changing form; a genetic change',
+  'NANOTUBES': 'cylindrical structures of carbon atoms with remarkable properties',
+  'NEUROBICS': 'mental exercises designed to keep the brain active',
+  'NEUROSIS': 'a mild mental disorder not caused by organic disease',
+  'OILSTONES': 'fine-grained stones used with oil to sharpen tools',
+  'OUTRIVAL': 'to surpass or outdo a rival',
+  'PERINEAL': 'relating to the perineum, the area between the genitals and anus',
+  'PINHEAD': 'the head of a pin; informal for a very stupid person',
+  'QUATRAIN': 'a stanza of four lines',
+  'QUERIDAS': 'beloved or dear ones in Spanish',
+  'RAILCAR': 'a self-propelled railway vehicle',
+  'REPROVAL': 'an expression of disapproval or rebuke',
+  'RESINOUS': 'resembling, containing, or of the nature of resin',
+  'RETAILERS': 'people or businesses that sell goods to the public',
+  'RETICULE': 'a woman\'s small bag with a drawstring; a network pattern',
+  'RIPIENOS': 'the full body of instruments in a concerto grosso',
+  'ROPINESS': 'the quality of being ropy or stringy',
+  'RUNTIMES': 'the time during which a program is running',
+  'SALMONID': 'a fish of the family Salmonidae, including salmon and trout',
+  'SAUTOIR': 'a long necklace or chain; heraldic term for a diagonal cross',
+  'SINUSOID': 'a curve having the form of a sine wave',
+  'SOCAGE': 'a feudal land tenure involving payment of rent',
+  'SOLANDER': 'a type of protective box for books or botanical specimens',
+  'SOLENOID': 'a cylindrical coil of wire acting as a magnet when carrying electric current',
+  'TERMINUS': 'the end of a railway or bus route',
+  'TOWPLANE': 'an aircraft that tows a glider',
+  'UNITIES': 'the state of being united or forming a whole',
+  'UNITISE': 'to convert into units or standardise',
+  'VOLUBLE': 'speaking fluently and at length',
   'ABORTIONS': 'terminations of pregnancies',
   'ABUTTER': 'a person whose property adjoins another\'s',
   'ACHIOTES': 'tropical shrubs whose seeds yield the dye annatto',
@@ -1478,7 +1573,776 @@ const DEFS={
   'WOMANISER': 'a man who pursues many women for sexual relationships'
 };
 
+const MY_LIST_2=[
+["ovule","lb",["voluble"],false],
+["weapon","tl",["towplane"],false],
+["sadder","m",["madders"],false],
+["cagiest","r",["agrestic"],false],
+["manoir","ac",["macaroni"],false],
+["looniest","s",["oilstones"],false],
+["aviated","p",["adaptive"],false],
+["brains","ce",["carbines"],false],
+["carbines","a",["braincase"],false],
+["pouters","a",["apterous"],false],
+["nations","fu",["fountains"],false],
+["racial","r",["railcar"],false],
+["impaler","i",["imperial"],false],
+["tarries","el",["retailers"],false],
+["pained","h",["pinhead"],false],
+["refocus","t",["fructose"],false],
+["cages","o",["socage"],false],
+["guilt","e",["glutei"],false],
+["sensor","iu",["neurosis","resinous"],false],
+["sensor","pi",["ropiness"],false],
+["ladinos","or",["doornails"],false],
+["squared","i",["queridas"],false],
+["lorries","n",["loriners"],false],
+["fedoras","in",["firenados"],false],
+["anodiser","f",["firenados"],false],
+["mustier","n",["runtimes","terminus"],false],
+["dagger","a",["garaged"],false],
+["faces","u",["fauces"],false],
+["cheat","mz",["chametz"],false],
+["sounds","ii",["sinusoid"],false],
+["pioneer","m",["epimeron"],false],
+["loonies","d",["solenoid"],false],
+["inspire","o",["ripienos"],false],
+["gunners","a",["gunneras"],false],
+["adobe","g",["bodega"],false],
+["mounted","s",["demounts"],false],
+["octane","j",["jaconet"],false],
+["gunned","o",["dungeon"],false],
+["gunned","a",["dunnage"],false],
+["morons","a",["maroons"],false],
+["unites","i",["unities","unitise"],false],
+["oarsmen","t",["monstera"],false],
+["monstera","a",["emanators"],false],
+["balmiest","e",["estimable"],false],
+["quaint","ra",["quatrain"],false],
+["groom","un",["gunroom"],false],
+["raciness","e",["increases"],false],
+["ratios","u",["sautoir"],false],
+["blister","ea",["beastlier","bleariest","liberates"],false],
+["tonneaus","b",["nanotubes"],false],
+["overlap","r",["reproval"],false],
+["manitou","t",["mutation"],false],
+["loaders","t",["lodestar"],false],
+["loaders","n",["solander"],false],
+["moister","ed",["dosimeter"],false],
+["leucite","r",["reticule"],false],
+["viola","utr",["outrival"],false],
+["ladinos","m",["salmonid"],false],
+["plainer","e",["perineal"],false],
+["saunter","c",["centaurs"],false],
+["demine","o",["dominee"],false],
+["bouncers","i",["neurobics"],false]
+];
+
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+const CCW=[
+  {w:"GOATIER",a:["GOATIER"],p:"GOATIERPA"},
+  {w:"ATONIES",a:["ATONIES"],p:"ATONIESEY"},
+  {w:"ASTEROID",a:["ASTEROID"],p:"ASTEROIDO"},
+  {w:"GOATEES",a:["GOATEES"],p:"GOATEESOI"},
+  {w:"RODENTIA",a:["RODENTIA", "RATIONED", "ORDINATE", "DERATION"],p:"RODENTIAA"},
+  {w:"DOUANES",a:["DOUANES"],p:"DOUANESYA"},
+  {w:"GODETIA",a:["GODETIA"],p:"GODETIAHY"},
+  {w:"ADIPOSE",a:["ADIPOSE"],p:"ADIPOSECE"},
+  {w:"IODATES",a:["IODATES"],p:"IODATESUR"},
+  {w:"SOAPIER",a:["SOAPIER"],p:"SOAPIEREE"},
+  {w:"RESONATE",a:["RESONATE"],p:"RESONATEE"},
+  {w:"AUDITOR",a:["AUDITOR"],p:"AUDITORII"},
+  {w:"TOESIDE",a:["TOESIDE"],p:"TOESIDELD"},
+  {w:"AUTOPEN",a:["AUTOPEN"],p:"AUTOPENEC"},
+  {w:"ROSALINE",a:["ROSALINE", "AILERONS"],p:"ROSALINEI"},
+  {w:"AUGITE",a:["AUGITE"],p:"AUGITEBMG"},
+  {w:"NOTARISE",a:["NOTARISE"],p:"NOTARISEC"},
+  {w:"OUTRIDE",a:["OUTRIDE"],p:"OUTRIDERI"},
+  {w:"SOUTANE",a:["SOUTANE"],p:"SOUTANETU"},
+  {w:"ANODISER",a:["ANODISER", "ANEROIDS"],p:"ANODISERO"},
+  {w:"AROUSED",a:["AROUSED"],p:"AROUSEDEK"},
+  {w:"NEUROMA",a:["NEUROMA", "ENAMOUR"],p:"NEUROMAAG"},
+  {w:"EMPORIA",a:["EMPORIA"],p:"EMPORIARN"},
+  {w:"TOENAILS",a:["TOENAILS"],p:"TOENAILSO"},
+  {w:"OSTERIA",a:["OSTERIA"],p:"OSTERIAAI"},
+  {w:"AGAROSE",a:["AGAROSE"],p:"AGAROSEKN"},
+  {w:"OUTAGES",a:["OUTAGES"],p:"OUTAGESAE"},
+  {w:"GODETIAS",a:["GODETIAS"],p:"GODETIASS"},
+  {w:"AGOUTIS",a:["AGOUTIS"],p:"AGOUTISAS"},
+  {w:"GOUTIER",a:["GOUTIER"],p:"GOUTIERND"},
+  {w:"DARIOLE",a:["DARIOLE"],p:"DARIOLEOE"},
+  {w:"SEDATION",a:["SEDATION"],p:"SEDATIONF"},
+  {w:"GAUDIER",a:["GAUDIER"],p:"GAUDIERTL"},
+  {w:"ATOMISER",a:["ATOMISER", "AMORTISE"],p:"ATOMISERA"},
+  {w:"GAUDIES",a:["GAUDIES"],p:"GAUDIESSE"},
+  {w:"AGOUTI",a:["AGOUTI"],p:"AGOUTICOP"},
+  {w:"OREGANO",a:["OREGANO"],p:"OREGANODS"},
+  {w:"ROGAINES",a:["ROGAINES", "ORGANISE"],p:"ROGAINESU"},
+  {w:"RELATION",a:["RELATION", "ORIENTAL"],p:"RELATIONI"},
+  {w:"LOANEES",a:["LOANEES"],p:"LOANEESBE"},
+  {w:"SAUTOIR",a:["SAUTOIR"],p:"SAUTOIREM"},
+  {w:"OUTLIERS",a:["OUTLIERS"],p:"OUTLIERSI"},
+  {w:"NOTATES",a:["NOTATES"],p:"NOTATESXO"},
+  {w:"ARONIAS",a:["ARONIAS"],p:"ARONIASEI"},
+  {w:"READOUTS",a:["READOUTS"],p:"READOUTSA"},
+  {w:"TANGOED",a:["TANGOED"],p:"TANGOEDSO"},
+  {w:"ORDINATES",a:["ORDINATES", "NOTARISED", "DERATIONS"],p:"ORDINATES"},
+  {w:"ODONATE",a:["ODONATE"],p:"ODONATETP"},
+  {w:"ROUTINES",a:["ROUTINES"],p:"ROUTINESS"},
+  {w:"GOATEE",a:["GOATEE"],p:"GOATEEASS"},
+  {w:"ROSEATE",a:["ROSEATE"],p:"ROSEATEIH"},
+  {w:"EVASION",a:["EVASION"],p:"EVASIONOG"},
+  {w:"OPIATE",a:["OPIATE"],p:"OPIATEHME"},
+  {w:"TUNEAGE",a:["TUNEAGE"],p:"TUNEAGEDP"},
+  {w:"RETINOL",a:["RETINOL"],p:"RETINOLAL"},
+  {w:"URINATES",a:["URINATES"],p:"URINATESF"},
+  {w:"EGOTISE",a:["EGOTISE"],p:"EGOTISEOA"},
+  {w:"TAILORED",a:["TAILORED", "IDOLATER"],p:"TAILOREDT"},
+  {w:"SODALITE",a:["SODALITE", "ISOLATED", "DIASTOLE"],p:"SODALITES"},
+  {w:"MOATED",a:["MOATED"],p:"MOATEDOPG"},
+  {w:"MURIATE",a:["MURIATE"],p:"MURIATECI"},
+  {w:"SOLUNAR",a:["SOLUNAR"],p:"SOLUNARHN"},
+  {w:"OUTWEAR",a:["OUTWEAR"],p:"OUTWEARXQ"},
+  {w:"LOAMIER",a:["LOAMIER"],p:"LOAMIEREI"},
+  {w:"LOUSIER",a:["LOUSIER"],p:"LOUSIEREN"},
+  {w:"ROTARIES",a:["ROTARIES"],p:"ROTARIESR"},
+  {w:"SAUTEED",a:["SAUTEED"],p:"SAUTEEDOE"},
+  {w:"VADOSE",a:["VADOSE"],p:"VADOSEICB"},
+  {w:"ROGAINE",a:["ROGAINE"],p:"ROGAINENI"},
+  {w:"HOAGIES",a:["HOAGIES"],p:"HOAGIESML"},
+  {w:"RAINOUT",a:["RAINOUT"],p:"RAINOUTSM"},
+  {w:"DIOPTASE",a:["DIOPTASE"],p:"DIOPTASET"},
+  {w:"RESIDUA",a:["RESIDUA"],p:"RESIDUAAO"},
+  {w:"NEMESIA",a:["NEMESIA", "MEANIES"],p:"NEMESIAAO"},
+  {w:"ORGANDIE",a:["ORGANDIE"],p:"ORGANDIEV"},
+  {w:"OSTEOID",a:["OSTEOID"],p:"OSTEOIDCL"},
+  {w:"TOENAIL",a:["TOENAIL", "ELATION", "ALNOITE"],p:"TOENAILOV"},
+  {w:"DOTAGES",a:["DOTAGES", "DOGATES"],p:"DOTAGESUR"},
+  {w:"TALONED",a:["TALONED"],p:"TALONEDUR"},
+  {w:"SOAPIE",a:["SOAPIE"],p:"SOAPIESIA"},
+  {w:"TEDIOUS",a:["TEDIOUS", "OUTSIDE"],p:"TEDIOUSLL"},
+  {w:"GOITRED",a:["GOITRED"],p:"GOITREDEW"},
+  {w:"HOAGIE",a:["HOAGIE"],p:"HOAGIEEAA"},
+  {w:"OLEATES",a:["OLEATES"],p:"OLEATESPA"},
+  {w:"RADIOMEN",a:["RADIOMEN"],p:"RADIOMENJ"},
+  {w:"ARANEID",a:["ARANEID"],p:"ARANEIDHR"},
+  {w:"APNOEA",a:["APNOEA"],p:"APNOEADES"},
+  {w:"AGONISE",a:["AGONISE", "AGONIES"],p:"AGONISESD"},
+  {w:"OPIATED",a:["OPIATED"],p:"OPIATEDTL"},
+  {w:"GUANOED",a:["GUANOED"],p:"GUANOEDOC"},
+  {w:"DARIOLES",a:["DARIOLES"],p:"DARIOLESE"},
+  {w:"LOONIER",a:["LOONIER"],p:"LOONIERHF"},
+  {w:"REASONED",a:["REASONED"],p:"REASONEDA"},
+  {w:"ROOTAGE",a:["ROOTAGE"],p:"ROOTAGEHL"},
+  {w:"ROMAINE",a:["ROMAINE", "MORAINE", "MOANIER"],p:"ROMAINEWO"},
+  {w:"TOWAIS",a:["TOWAIS"],p:"TOWAISXMN"},
+  {w:"POUTIER",a:["POUTIER"],p:"POUTIERAO"},
+  {w:"DELATION",a:["DELATION"],p:"DELATIONR"},
+  {w:"OPIATES",a:["OPIATES"],p:"OPIATESAT"},
+  {w:"APOGEES",a:["APOGEES"],p:"APOGEESEF"},
+  {w:"DIAGNOSE",a:["DIAGNOSE", "AGONISED"],p:"DIAGNOSEF"},
+  {w:"TENSORIAL",a:["TENSORIAL", "RELATIONS", "ORIENTALS"],p:"TENSORIAL"},
+  {w:"AUDITORS",a:["AUDITORS"],p:"AUDITORSO"},
+  {w:"IGNEOUS",a:["IGNEOUS"],p:"IGNEOUSLK"},
+  {w:"OUTEARNS",a:["OUTEARNS"],p:"OUTEARNSI"},
+  {w:"MEDIATOR",a:["MEDIATOR"],p:"MEDIATORL"},
+  {w:"AERATIONS",a:["AERATIONS"],p:"AERATIONS"},
+  {w:"RAINOUTS",a:["RAINOUTS"],p:"RAINOUTSA"},
+  {w:"DONATES",a:["DONATES"],p:"DONATESPO"},
+  {w:"APOGEE",a:["APOGEE"],p:"APOGEEPLD"},
+  {w:"TOWAGE",a:["TOWAGE"],p:"TOWAGEIAS"},
+  {w:"NEUROMAS",a:["NEUROMAS", "ENAMOURS"],p:"NEUROMASK"},
+  {w:"MIAOWED",a:["MIAOWED"],p:"MIAOWEDAC"},
+  {w:"WEAPON",a:["WEAPON"],p:"WEAPONQLE"},
+  {w:"NAUSEA",a:["NAUSEA"],p:"NAUSEADNT"},
+  {w:"INSULAE",a:["INSULAE"],p:"INSULAEEA"},
+  {w:"ANISEED",a:["ANISEED"],p:"ANISEEDSN"},
+  {w:"PETUNIA",a:["PETUNIA"],p:"PETUNIAIE"},
+  {w:"AEROGEL",a:["AEROGEL"],p:"AEROGELIC"},
+  {w:"NEONATE",a:["NEONATE"],p:"NEONATEEE"},
+  {w:"DENARIUS",a:["DENARIUS"],p:"DENARIUSF"},
+  {w:"ROMANISE",a:["ROMANISE", "ROMAINES", "MORAINES"],p:"ROMANISET"},
+  {w:"ADAGIOS",a:["ADAGIOS"],p:"ADAGIOSEK"},
+  {w:"GUINEAS",a:["GUINEAS"],p:"GUINEASLX"},
+  {w:"AUTOPENS",a:["AUTOPENS"],p:"AUTOPENSA"},
+  {w:"TAENIAE",a:["TAENIAE"],p:"TAENIAEAM"},
+  {w:"MOANIEST",a:["MOANIEST", "AMNIOTES"],p:"MOANIESTT"},
+  {w:"GUTSIER",a:["GUTSIER", "GUSTIER"],p:"GUTSIERCA"},
+  {w:"FEARTIE",a:["FEARTIE"],p:"FEARTIEOL"},
+  {w:"NOTATE",a:["NOTATE"],p:"NOTATEDRI"},
+  {w:"DIORITE",a:["DIORITE"],p:"DIORITECW"},
+  {w:"TOLUENE",a:["TOLUENE"],p:"TOLUENEFG"},
+  {w:"ALIENOR",a:["ALIENOR", "ALERION", "AILERON"],p:"ALIENORIB"},
+  {w:"GEODATA",a:["GEODATA"],p:"GEODATANR"},
+  {w:"REMOUNT",a:["REMOUNT", "MOUNTER"],p:"REMOUNTHM"},
+  {w:"GOATEED",a:["GOATEED", "DOGEATE"],p:"GOATEEDSR"},
+  {w:"ELODEA",a:["ELODEA"],p:"ELODEALTA"},
+  {w:"ROUTINED",a:["ROUTINED"],p:"ROUTINEDO"},
+  {w:"TOADIED",a:["TOADIED"],p:"TOADIEDIE"},
+  {w:"AEROLITE",a:["AEROLITE"],p:"AEROLITEN"},
+  {w:"GAUDIEST",a:["GAUDIEST"],p:"GAUDIESTE"},
+  {w:"UPRAISE",a:["UPRAISE"],p:"UPRAISEUC"},
+  {w:"IDEATUM",a:["IDEATUM"],p:"IDEATUMIU"},
+  {w:"POUTINE",a:["POUTINE"],p:"POUTINEIE"},
+  {w:"SEPTORIA",a:["SEPTORIA", "PASTORIE"],p:"SEPTORIAE"},
+  {w:"EGESTION",a:["EGESTION"],p:"EGESTIONB"},
+  {w:"ANODISE",a:["ANODISE", "ADONISE"],p:"ANODISEPE"},
+  {w:"LEGATION",a:["LEGATION", "GELATION"],p:"LEGATIONI"},
+  {w:"DOTTIER",a:["DOTTIER"],p:"DOTTIEREE"},
+  {w:"ERUDITE",a:["ERUDITE"],p:"ERUDITENE"},
+  {w:"PETIOLAR",a:["PETIOLAR", "PELOTARI", "EPILATOR"],p:"PETIOLARL"},
+  {w:"DESOLATE",a:["DESOLATE"],p:"DESOLATEI"},
+  {w:"AEROLITES",a:["AEROLITES"],p:"AEROLITES"},
+  {w:"SERRANO",a:["SERRANO"],p:"SERRANOOH"},
+  {w:"EDITION",a:["EDITION"],p:"EDITIONTI"},
+  {w:"SEAMOUNT",a:["SEAMOUNT"],p:"SEAMOUNTC"},
+  {w:"NOVATES",a:["NOVATES"],p:"NOVATESAF"},
+  {w:"OUTLINER",a:["OUTLINER"],p:"OUTLINERU"},
+  {w:"ARIOSO",a:["ARIOSO"],p:"ARIOSOUTO"},
+  {w:"ANTERIOR",a:["ANTERIOR"],p:"ANTERIORZ"},
+  {w:"IDOCRASE",a:["IDOCRASE"],p:"IDOCRASET"},
+  {w:"LOITERED",a:["LOITERED", "DOLERITE"],p:"LOITEREDR"},
+  {w:"EROTICA",a:["EROTICA"],p:"EROTICAIA"},
+  {w:"INTRADOS",a:["INTRADOS"],p:"INTRADOSA"},
+  {w:"GIAOUR",a:["GIAOUR"],p:"GIAOURMRS"},
+  {w:"SEROTINE",a:["SEROTINE"],p:"SEROTINER"},
+  {w:"LEGATOR",a:["LEGATOR", "GLOATER"],p:"LEGATORRT"},
+  {w:"TOOLIE",a:["TOOLIE", "OOLITE"],p:"TOOLIEFEH"},
+  {w:"EULOGIA",a:["EULOGIA"],p:"EULOGIAMM"},
+  {w:"RADIATES",a:["RADIATES"],p:"RADIATESA"},
+  {w:"TOWNEE",a:["TOWNEE"],p:"TOWNEEERF"},
+  {w:"AUDITS",a:["AUDITS"],p:"AUDITSNAO"},
+  {w:"ORIOLES",a:["ORIOLES"],p:"ORIOLESII"},
+  {w:"SERAGLIO",a:["SERAGLIO", "GIRASOLE", "GASOLIER"],p:"SERAGLIOL"},
+  {w:"OUTRAGES",a:["OUTRAGES"],p:"OUTRAGEST"},
+  {w:"ANDESITE",a:["ANDESITE"],p:"ANDESITEA"},
+  {w:"LARDIEST",a:["LARDIEST"],p:"LARDIESTR"},
+  {w:"OUTLINES",a:["OUTLINES", "ELUTIONS"],p:"OUTLINESI"},
+  {w:"AREOLAE",a:["AREOLAE"],p:"AREOLAEOT"},
+  {w:"DENARII",a:["DENARII"],p:"DENARIIOE"},
+  {w:"LODESTAR",a:["LODESTAR", "LEOTARDS", "DELATORS"],p:"LODESTARR"},
+  {w:"COATEES",a:["COATEES"],p:"COATEESCA"},
+  {w:"ATOMISED",a:["ATOMISED"],p:"ATOMISEDE"},
+  {w:"LOANEE",a:["LOANEE"],p:"LOANEEMCE"},
+  {w:"ROOTAGES",a:["ROOTAGES"],p:"ROOTAGESE"},
+  {w:"NEARSIDE",a:["NEARSIDE", "ARSENIDE"],p:"NEARSIDEW"},
+  {w:"SERIATION",a:["SERIATION"],p:"SERIATION"},
+  {w:"BOATIES",a:["BOATIES"],p:"BOATIESIA"},
+  {w:"DINOSAUR",a:["DINOSAUR"],p:"DINOSAURR"},
+  {w:"PATRONISE",a:["PATRONISE", "ISOPTERAN"],p:"PATRONISE"},
+  {w:"ARENOSOL",a:["ARENOSOL"],p:"ARENOSOLT"},
+  {w:"WEARIES",a:["WEARIES"],p:"WEARIESTI"},
+  {w:"URINATED",a:["URINATED", "RUINATED", "INDURATE", "DATURINE"],p:"URINATEDR"},
+  {w:"DOSAGE",a:["DOSAGE", "DAGOES"],p:"DOSAGEEAS"},
+  {w:"CORONAE",a:["CORONAE"],p:"CORONAEES"},
+  {w:"DAINTIER",a:["DAINTIER"],p:"DAINTIERO"},
+  {w:"COURAGE",a:["COURAGE"],p:"COURAGEZZ"},
+  {w:"RUESOME",a:["RUESOME"],p:"RUESOMETO"},
+  {w:"ROULADE",a:["ROULADE"],p:"ROULADERG"},
+  {w:"OVATES",a:["OVATES"],p:"OVATESFZC"},
+  {w:"APOLUNE",a:["APOLUNE"],p:"APOLUNEMB"},
+  {w:"ELUATES",a:["ELUATES"],p:"ELUATESTA"},
+  {w:"URANATE",a:["URANATE"],p:"URANATEIO"},
+  {w:"ETALONS",a:["ETALONS"],p:"ETALONSIE"},
+  {w:"INSULATE",a:["INSULATE"],p:"INSULATEU"},
+  {w:"DIARISE",a:["DIARISE", "DIARIES", "DAIRIES", "AIRSIDE"],p:"DIARISEYC"},
+  {w:"CAMOGIE",a:["CAMOGIE"],p:"CAMOGIEEV"},
+  {w:"SUPINATE",a:["SUPINATE", "PETUNIAS"],p:"SUPINATEN"},
+  {w:"TAUIWI",a:["TAUIWI"],p:"TAUIWIEEU"},
+  {w:"GORDITA",a:["GORDITA"],p:"GORDITATL"},
+  {w:"TOASTIER",a:["TOASTIER"],p:"TOASTIERL"},
+  {w:"SCORIAE",a:["SCORIAE"],p:"SCORIAEAE"},
+  {w:"AERATED",a:["AERATED"],p:"AERATEDLE"},
+  {w:"SINUATE",a:["SINUATE", "AUNTIES"],p:"SINUATEIE"},
+  {w:"OILIER",a:["OILIER"],p:"OILIERDEH"},
+  {w:"FOEMAN",a:["FOEMAN"],p:"FOEMANIRA"},
+  {w:"PIROGUE",a:["PIROGUE", "GROUPIE"],p:"PIROGUECO"},
+  {w:"AGORAE",a:["AGORAE"],p:"AGORAEUDE"},
+  {w:"TRAINEES",a:["TRAINEES", "RESINATE"],p:"TRAINEESD"},
+  {w:"SOIGNEE",a:["SOIGNEE"],p:"SOIGNEEER"},
+  {w:"LOANERS",a:["LOANERS"],p:"LOANERSMU"},
+  {w:"EUTOPIA",a:["EUTOPIA"],p:"EUTOPIACL"},
+  {w:"DAPSONE",a:["DAPSONE"],p:"DAPSONENO"},
+  {w:"FEDORAS",a:["FEDORAS"],p:"FEDORASIH"},
+  {w:"RADIATE",a:["RADIATE"],p:"RADIATEBN"},
+  {w:"BARONIES",a:["BARONIES"],p:"BARONIESI"},
+  {w:"STEROIDAL",a:["STEROIDAL", "IDOLATERS"],p:"STEROIDAL"},
+  {w:"MOTLIER",a:["MOTLIER"],p:"MOTLIEROS"},
+  {w:"VOTARIES",a:["VOTARIES"],p:"VOTARIESA"},
+  {w:"RINCEAU",a:["RINCEAU"],p:"RINCEAUHM"},
+  {w:"UNITARD",a:["UNITARD"],p:"UNITARDOT"},
+  {w:"GATEAUS",a:["GATEAUS"],p:"GATEAUSNW"},
+  {w:"LOAMIEST",a:["LOAMIEST"],p:"LOAMIESTE"},
+  {w:"AGISTED",a:["AGISTED"],p:"AGISTEDET"},
+  {w:"OUTRANGE",a:["OUTRANGE"],p:"OUTRANGED"},
+  {w:"ARANEIDS",a:["ARANEIDS"],p:"ARANEIDSC"},
+  {w:"GROUTED",a:["GROUTED"],p:"GROUTEDAE"},
+  {w:"MEDIATE",a:["MEDIATE"],p:"MEDIATELI"},
+  {w:"UNEASIER",a:["UNEASIER"],p:"UNEASIERL"},
+  {w:"AUGENDS",a:["AUGENDS"],p:"AUGENDSOA"},
+  {w:"DOMAINES",a:["DOMAINES"],p:"DOMAINESN"},
+  {w:"TROOPIE",a:["TROOPIE"],p:"TROOPIEEO"},
+  {w:"ROTULAS",a:["ROTULAS"],p:"ROTULASSO"},
+  {w:"GOALIES",a:["GOALIES"],p:"GOALIESAR"},
+  {w:"TELAMON",a:["TELAMON"],p:"TELAMONCB"},
+  {w:"TRIAGED",a:["TRIAGED"],p:"TRIAGEDOD"},
+  {w:"URINALS",a:["URINALS", "INSULAR"],p:"URINALSML"},
+  {w:"FAINTER",a:["FAINTER"],p:"FAINTEREH"},
+  {w:"WEARIED",a:["WEARIED"],p:"WEARIEDCO"},
+  {w:"DURATION",a:["DURATION"],p:"DURATIONM"},
+  {w:"ONEROUS",a:["ONEROUS"],p:"ONEROUSAA"},
+  {w:"TOASTED",a:["TOASTED"],p:"TOASTEDOA"},
+  {w:"ESTUARINE",a:["ESTUARINE"],p:"ESTUARINE"},
+  {w:"NOVATE",a:["NOVATE"],p:"NOVATEAVC"},
+  {w:"CORDAGE",a:["CORDAGE"],p:"CORDAGEAO"},
+  {w:"SONICATE",a:["SONICATE", "CANOEIST", "ACONITES", "ACETOINS"],p:"SONICATEO"},
+  {w:"HEADTIE",a:["HEADTIE"],p:"HEADTIEDI"},
+  {w:"FOGIES",a:["FOGIES"],p:"FOGIESBNI"},
+  {w:"ADAGIO",a:["ADAGIO"],p:"ADAGIOHPO"},
+  {w:"EPIDOTE",a:["EPIDOTE"],p:"EPIDOTELT"},
+  {w:"TRAINEE",a:["TRAINEE"],p:"TRAINEEOE"},
+  {w:"OLEASTER",a:["OLEASTER"],p:"OLEASTERE"},
+  {w:"ADENOMA",a:["ADENOMA"],p:"ADENOMAPR"},
+  {w:"SAURIAN",a:["SAURIAN"],p:"SAURIANOE"},
+  {w:"EUTOPIAN",a:["EUTOPIAN"],p:"EUTOPIANE"},
+  {w:"AUTEURS",a:["AUTEURS"],p:"AUTEURSNX"},
+  {w:"DEVIOUS",a:["DEVIOUS"],p:"DEVIOUSAP"},
+  {w:"OILIEST",a:["OILIEST"],p:"OILIESTOA"},
+  {w:"TONGUES",a:["TONGUES"],p:"TONGUESYR"},
+  {w:"TOUSLED",a:["TOUSLED", "LOUDEST"],p:"TOUSLEDCB"},
+  {w:"LENTOID",a:["LENTOID"],p:"LENTOIDRC"},
+  {w:"AERATES",a:["AERATES"],p:"AERATESEA"},
+  {w:"TAILOR",a:["TAILOR"],p:"TAILOREGA"},
+  {w:"OUTSAIL",a:["OUTSAIL"],p:"OUTSAILCE"},
+  {w:"AEOLIAN",a:["AEOLIAN"],p:"AEOLIANSU"},
+  {w:"SOLARIA",a:["SOLARIA"],p:"SOLARIACA"},
+  {w:"ARTESIAN",a:["ARTESIAN", "ANTISERA"],p:"ARTESIANR"},
+  {w:"RESIDUAL",a:["RESIDUAL"],p:"RESIDUALA"},
+  {w:"GIFTEE",a:["GIFTEE"],p:"GIFTEEENS"},
+  {w:"PARODIES",a:["PARODIES", "DIASPORE"],p:"PARODIESJ"},
+  {w:"GUIDOS",a:["GUIDOS"],p:"GUIDOSESI"},
+  {w:"RUMINATE",a:["RUMINATE"],p:"RUMINATEH"},
+  {w:"IRONIA",a:["IRONIA"],p:"IRONIAOHA"},
+  {w:"SOAPIES",a:["SOAPIES"],p:"SOAPIESSQ"},
+  {w:"WIRETAP",a:["WIRETAP"],p:"WIRETAPCR"},
+  {w:"DUGITE",a:["DUGITE"],p:"DUGITEDVA"},
+  {w:"AREOLAR",a:["AREOLAR"],p:"AREOLARIA"},
+  {w:"CAESIUM",a:["CAESIUM"],p:"CAESIUMIR"},
+  {w:"ROASTIES",a:["ROASTIES", "OSTERIAS"],p:"ROASTIESE"},
+  {w:"EROSION",a:["EROSION"],p:"EROSIONIY"},
+  {w:"OLEANDER",a:["OLEANDER"],p:"OLEANDERN"},
+  {w:"ANTIDOTE",a:["ANTIDOTE"],p:"ANTIDOTEZ"},
+  {w:"ODONATES",a:["ODONATES"],p:"ODONATESR"},
+  {w:"AWESOME",a:["AWESOME"],p:"AWESOMEHY"},
+  {w:"GOODIE",a:["GOODIE"],p:"GOODIEOOA"},
+  {w:"MOUSIER",a:["MOUSIER"],p:"MOUSIERZG"},
+  {w:"AMIRITE",a:["AMIRITE", "AIRTIME"],p:"AMIRITEAS"},
+  {w:"CAGIEST",a:["CAGIEST"],p:"CAGIESTET"},
+  {w:"COINAGE",a:["COINAGE"],p:"COINAGEII"},
+  {w:"STODGIER",a:["STODGIER"],p:"STODGIERT"},
+  {w:"OESTRIOL",a:["OESTRIOL"],p:"OESTRIOLN"},
+  {w:"GUITARS",a:["GUITARS"],p:"GUITARSNJ"},
+  {w:"POUTINES",a:["POUTINES"],p:"POUTINESI"},
+  {w:"OUTGONE",a:["OUTGONE"],p:"OUTGONEIE"},
+  {w:"ARIOSOS",a:["ARIOSOS"],p:"ARIOSOSMI"},
+  {w:"SAUTEING",a:["SAUTEING"],p:"SAUTEINGR"},
+  {w:"POTAGER",a:["POTAGER", "PORTAGE"],p:"POTAGERNO"},
+  {w:"HOARIEST",a:["HOARIEST"],p:"HOARIESTE"},
+  {w:"PEONIES",a:["PEONIES"],p:"PEONIESXO"},
+  {w:"GORIEST",a:["GORIEST", "GOITRES"],p:"GORIESTNM"},
+  {w:"EPIGONE",a:["EPIGONE"],p:"EPIGONELR"},
+  {w:"PINOTAGE",a:["PINOTAGE"],p:"PINOTAGEH"},
+  {w:"RAINIEST",a:["RAINIEST"],p:"RAINIESTL"},
+  {w:"DELATIONS",a:["DELATIONS"],p:"DELATIONS"},
+  {w:"SEMOLINA",a:["SEMOLINA"],p:"SEMOLINAN"},
+  {w:"GOOIER",a:["GOOIER"],p:"GOOIEREAO"},
+  {w:"GOOIEST",a:["GOOIEST"],p:"GOOIESTIU"},
+  {w:"RATOONED",a:["RATOONED"],p:"RATOONEDO"},
+  {w:"UNSEATED",a:["UNSEATED"],p:"UNSEATEDE"},
+  {w:"UNLOADER",a:["UNLOADER", "EUROLAND"],p:"UNLOADERA"},
+  {w:"SOUTANES",a:["SOUTANES"],p:"SOUTANESD"},
+  {w:"TURIONS",a:["TURIONS", "NITROUS"],p:"TURIONSRN"},
+  {w:"ECOTAGE",a:["ECOTAGE"],p:"ECOTAGEFZ"},
+  {w:"AUTOMISE",a:["AUTOMISE"],p:"AUTOMISEN"},
+  {w:"AUSTERE",a:["AUSTERE"],p:"AUSTERERD"},
+  {w:"SOCAGE",a:["SOCAGE"],p:"SOCAGELAS"},
+  {w:"APORIA",a:["APORIA"],p:"APORIAUIO"},
+  {w:"ROULADES",a:["ROULADES"],p:"ROULADESE"},
+  {w:"DIMEROUS",a:["DIMEROUS"],p:"DIMEROUSB"},
+  {w:"TRAINED",a:["TRAINED", "DETRAIN"],p:"TRAINEDRE"},
+  {w:"DOMINEE",a:["DOMINEE"],p:"DOMINEELL"},
+  {w:"AERATION",a:["AERATION"],p:"AERATIONH"},
+  {w:"OUTDID",a:["OUTDID"],p:"OUTDIDFYY"},
+  {w:"TIMEOUS",a:["TIMEOUS"],p:"TIMEOUSHI"},
+  {w:"REGIONAL",a:["REGIONAL", "GERANIOL"],p:"REGIONALS"},
+  {w:"TURION",a:["TURION"],p:"TURIONREH"},
+  {w:"OEDEMA",a:["OEDEMA"],p:"OEDEMANDN"},
+  {w:"TRIAGES",a:["TRIAGES", "STAGIER", "GAITERS", "AGISTER"],p:"TRIAGESMA"},
+  {w:"ALMONER",a:["ALMONER"],p:"ALMONERFO"},
+  {w:"TANGELO",a:["TANGELO"],p:"TANGELOLN"},
+  {w:"SUASION",a:["SUASION"],p:"SUASIONHR"},
+  {w:"DILATOR",a:["DILATOR"],p:"DILATORNR"},
+  {w:"NAIADES",a:["NAIADES"],p:"NAIADESGO"},
+  {w:"SOIGNEUR",a:["SOIGNEUR"],p:"SOIGNEURC"},
+  {w:"PETIOLE",a:["PETIOLE"],p:"PETIOLEAI"},
+  {w:"STRAINED",a:["STRAINED", "RANDIEST", "DETRAINS"],p:"STRAINEDR"},
+  {w:"PAEONIES",a:["PAEONIES"],p:"PAEONIESH"},
+  {w:"SEPTAGE",a:["SEPTAGE"],p:"SEPTAGESH"},
+  {w:"OTARIID",a:["OTARIID"],p:"OTARIIDVI"},
+  {w:"MEDIAE",a:["MEDIAE"],p:"MEDIAEDCO"},
+  {w:"FOSSAE",a:["FOSSAE"],p:"FOSSAERCE"},
+  {w:"ROADIES",a:["ROADIES", "RADIOES"],p:"ROADIESOO"},
+  {w:"AUREOLA",a:["AUREOLA"],p:"AUREOLAIR"},
+  {w:"SEDITION",a:["SEDITION", "EDITIONS"],p:"SEDITIONZ"},
+  {w:"SCENARIO",a:["SCENARIO"],p:"SCENARIOU"},
+  {w:"RENEGADO",a:["RENEGADO"],p:"RENEGADOD"},
+  {w:"ODONATA",a:["ODONATA"],p:"ODONATAMN"},
+  {w:"LEOTARD",a:["LEOTARD"],p:"LEOTARDTR"},
+  {w:"EARWIGS",a:["EARWIGS"],p:"EARWIGSRH"},
+  {w:"RESOLUTE",a:["RESOLUTE"],p:"RESOLUTEI"},
+  {w:"TAIHOAS",a:["TAIHOAS"],p:"TAIHOASLT"},
+  {w:"APIECE",a:["APIECE"],p:"APIECEJJY"},
+  {w:"ARONIA",a:["ARONIA"],p:"ARONIAAME"},
+  {w:"TONEPADS",a:["TONEPADS", "PADSTONE", "NOTEPADS"],p:"TONEPADSO"},
+  {w:"AIRSPEED",a:["AIRSPEED"],p:"AIRSPEEDL"},
+  {w:"OAKIER",a:["OAKIER"],p:"OAKIERMPD"},
+  {w:"GIAOURS",a:["GIAOURS"],p:"GIAOURSNE"},
+  {w:"SITUATE",a:["SITUATE"],p:"SITUATEWI"},
+  {w:"WAITRON",a:["WAITRON"],p:"WAITRONHN"},
+  {w:"SOSATIE",a:["SOSATIE"],p:"SOSATIEII"},
+  {w:"TROPINES",a:["TROPINES", "REPOINTS", "PTERIONS", "PROTEINS", "PORNIEST", "POINTERS"],p:"TROPINESA"},
+  {w:"GLOATED",a:["GLOATED"],p:"GLOATEDEE"},
+  {w:"SEAFOOD",a:["SEAFOOD"],p:"SEAFOODOT"},
+  {w:"RAGSTONE",a:["RAGSTONE", "NEGATORS"],p:"RAGSTONED"},
+  {w:"AMNIOTE",a:["AMNIOTE"],p:"AMNIOTEXE"},
+  {w:"CAROTENE",a:["CAROTENE", "ACTOREEN"],p:"CAROTENET"},
+  {w:"TIBIAE",a:["TIBIAE"],p:"TIBIAERPU"},
+  {w:"TONGUE",a:["TONGUE"],p:"TONGUEIBG"},
+  {w:"INDURATES",a:["INDURATES", "DATURINES"],p:"INDURATES"},
+  {w:"DEROGATE",a:["DEROGATE"],p:"DEROGATES"},
+  {w:"PERITONEA",a:["PERITONEA"],p:"PERITONEA"},
+  {w:"LORINER",a:["LORINER"],p:"LORINERLR"},
+  {w:"POLARISE",a:["POLARISE", "PELORIAS"],p:"POLARISEO"},
+  {w:"UPRAISED",a:["UPRAISED"],p:"UPRAISEDA"},
+  {w:"ESTAFA",a:["ESTAFA"],p:"ESTAFAMGE"},
+  {w:"FOAMIER",a:["FOAMIER"],p:"FOAMIERWX"},
+  {w:"AUTOGAS",a:["AUTOGAS"],p:"AUTOGASAQ"},
+  {w:"AMORIST",a:["AMORIST"],p:"AMORISTRI"},
+  {w:"UNSAFE",a:["UNSAFE"],p:"UNSAFEIGL"},
+  {w:"REACTIONS",a:["REACTIONS", "NARCOTISE", "CREATIONS", "ACTIONERS"],p:"REACTIONS"},
+  {w:"TEASPOON",a:["TEASPOON"],p:"TEASPOONT"},
+  {w:"UTOPIA",a:["UTOPIA"],p:"UTOPIAECO"},
+  {w:"MINORED",a:["MINORED"],p:"MINOREDAT"},
+  {w:"ORIENTED",a:["ORIENTED"],p:"ORIENTEDA"},
+  {w:"DIATOM",a:["DIATOM"],p:"DIATOMTHL"},
+  {w:"HERNIAE",a:["HERNIAE"],p:"HERNIAECD"},
+  {w:"UNREASON",a:["UNREASON"],p:"UNREASONN"},
+  {w:"SPOLIATE",a:["SPOLIATE"],p:"SPOLIATEW"},
+  {w:"SENHORA",a:["SENHORA", "HOARSEN"],p:"SENHORARD"},
+  {w:"OUTLIER",a:["OUTLIER"],p:"OUTLIERFL"},
+  {w:"ROUTEING",a:["ROUTEING"],p:"ROUTEINGR"},
+  {w:"OUTDATE",a:["OUTDATE"],p:"OUTDATECT"},
+  {w:"DEVIATOR",a:["DEVIATOR"],p:"DEVIATORA"},
+  {w:"TREENAIL",a:["TREENAIL"],p:"TREENAILV"},
+  {w:"RESINATED",a:["RESINATED", "DETAINERS"],p:"RESINATED"},
+  {w:"WAITED",a:["WAITED"],p:"WAITEDTTO"},
+  {w:"STEAMIE",a:["STEAMIE"],p:"STEAMIEWO"},
+  {w:"BOARDIES",a:["BOARDIES"],p:"BOARDIESP"},
+  {w:"IDEATES",a:["IDEATES"],p:"IDEATESOX"},
+  {w:"PRONAOI",a:["PRONAOI"],p:"PRONAOIQL"},
+  {w:"MURIATES",a:["MURIATES"],p:"MURIATEST"},
+  {w:"RETAINED",a:["RETAINED", "DETAINER"],p:"RETAINEDP"},
+  {w:"MORALISE",a:["MORALISE"],p:"MORALISEI"},
+  {w:"VEINOUS",a:["VEINOUS", "NIVEOUS", "ENVIOUS"],p:"VEINOUSOR"},
+  {w:"GROUSED",a:["GROUSED", "GOURDES", "DROGUES"],p:"GROUSEDEB"},
+  {w:"AUDIT",a:["AUDIT"],p:"AUDITOION"},
+  {w:"RESONATED",a:["RESONATED"],p:"RESONATED"},
+  {w:"HOARIER",a:["HOARIER"],p:"HOARIERNC"},
+  {w:"TOUPEE",a:["TOUPEE"],p:"TOUPEEEAA"},
+  {w:"OUTSIDER",a:["OUTSIDER"],p:"OUTSIDERI"},
+  {w:"TAIHOA",a:["TAIHOA"],p:"TAIHOASGA"},
+  {w:"ISLANDER",a:["ISLANDER"],p:"ISLANDERB"},
+  {w:"MEDIATORS",a:["MEDIATORS", "AMORTISED"],p:"MEDIATORS"},
+  {w:"SOLANDER",a:["SOLANDER", "LADRONES"],p:"SOLANDERI"},
+  {w:"COASTED",a:["COASTED"],p:"COASTEDER"},
+  {w:"TEMENOI",a:["TEMENOI"],p:"TEMENOIRN"},
+  {w:"UPDATE",a:["UPDATE"],p:"UPDATECTR"},
+  {w:"ROUTINE",a:["ROUTINE"],p:"ROUTINEEI"},
+  {w:"UNAIRED",a:["UNAIRED"],p:"UNAIREDRS"},
+  {w:"DEAFEN",a:["DEAFEN"],p:"DEAFENXUG"},
+  {w:"OATMEAL",a:["OATMEAL"],p:"OATMEALEK"},
+  {w:"COINAGES",a:["COINAGES"],p:"COINAGESU"},
+  {w:"TARRIED",a:["TARRIED", "TARDIER"],p:"TARRIEDST"},
+  {w:"OUTJIE",a:["OUTJIE"],p:"OUTJIEESO"},
+  {w:"DEODARS",a:["DEODARS"],p:"DEODARSWS"},
+  {w:"TRANSUDE",a:["TRANSUDE"],p:"TRANSUDER"},
+  {w:"AMADOU",a:["AMADOU"],p:"AMADOULVY"},
+  {w:"ITERATED",a:["ITERATED"],p:"ITERATEDC"},
+  {w:"OARWEED",a:["OARWEED"],p:"OARWEEDDI"},
+  {w:"ARDOUR",a:["ARDOUR"],p:"ARDOURTIO"},
+  {w:"SOLATIA",a:["SOLATIA"],p:"SOLATIART"},
+  {w:"TRITONE",a:["TRITONE"],p:"TRITONEES"},
+  {w:"GOALSIDE",a:["GOALSIDE"],p:"GOALSIDEN"},
+  {w:"OUTRAGED",a:["OUTRAGED"],p:"OUTRAGEDH"},
+  {w:"GAUNTER",a:["GAUNTER"],p:"GAUNTERHR"},
+  {w:"UNIPEDS",a:["UNIPEDS"],p:"UNIPEDSFA"},
+  {w:"MEDUSAE",a:["MEDUSAE"],p:"MEDUSAETA"},
+  {w:"TENTORIA",a:["TENTORIA"],p:"TENTORIAD"},
+  {w:"OWNAGE",a:["OWNAGE"],p:"OWNAGELES"},
+  {w:"OPERATED",a:["OPERATED"],p:"OPERATEDU"},
+  {w:"ORTOLAN",a:["ORTOLAN"],p:"ORTOLANCM"},
+  {w:"TWOONIE",a:["TWOONIE"],p:"TWOONIEEE"},
+  {w:"SERENATA",a:["SERENATA", "ARSENATE"],p:"SERENATAM"},
+  {w:"PTOMAINE",a:["PTOMAINE"],p:"PTOMAINER"},
+  {w:"EPISODE",a:["EPISODE"],p:"EPISODEAT"},
+  {w:"PROTEGE",a:["PROTEGE"],p:"PROTEGEIE"},
+  {w:"ARGOSIES",a:["ARGOSIES"],p:"ARGOSIESO"},
+  {w:"ATRESIA",a:["ATRESIA"],p:"ATRESIASN"},
+  {w:"EMULATOR",a:["EMULATOR"],p:"EMULATORI"},
+  {w:"MOODIER",a:["MOODIER", "MOIDORE", "DOOMIER"],p:"MOODIERTN"},
+  {w:"GODLIER",a:["GODLIER", "GLORIED"],p:"GODLIERNK"},
+  {w:"ROTUNDA",a:["ROTUNDA"],p:"ROTUNDASO"},
+  {w:"IODINE",a:["IODINE"],p:"IODINEWRO"},
+  {w:"TIMEOUT",a:["TIMEOUT"],p:"TIMEOUTET"},
+  {w:"MOISTURE",a:["MOISTURE", "MISROUTE"],p:"MOISTUREE"},
+  {w:"EARWIG",a:["EARWIG"],p:"EARWIGVCE"},
+  {w:"DOSAGES",a:["DOSAGES"],p:"DOSAGESNI"},
+  {w:"ALEURONE",a:["ALEURONE"],p:"ALEURONEM"},
+  {w:"AGNOSIA",a:["AGNOSIA"],p:"AGNOSIAEQ"},
+  {w:"STADIUM",a:["STADIUM"],p:"STADIUMME"},
+  {w:"AMORETTI",a:["AMORETTI"],p:"AMORETTIW"},
+  {w:"ACAROID",a:["ACAROID"],p:"ACAROIDEO"},
+  {w:"ENTAILED",a:["ENTAILED", "DATELINE"],p:"ENTAILEDI"},
+  {w:"EUPLOID",a:["EUPLOID"],p:"EUPLOIDED"},
+  {w:"TOUPEES",a:["TOUPEES"],p:"TOUPEESAI"},
+  {w:"RUNTIME",a:["RUNTIME"],p:"RUNTIMEAT"},
+  {w:"UNOILED",a:["UNOILED"],p:"UNOILEDHA"},
+  {w:"TONGUED",a:["TONGUED"],p:"TONGUEDCI"},
+  {w:"ODIOUS",a:["ODIOUS"],p:"ODIOUSTGO"},
+  {w:"FOETID",a:["FOETID"],p:"FOETIDXSA"},
+  {w:"GOODIES",a:["GOODIES"],p:"GOODIESDD"},
+  {w:"MAGPIE",a:["MAGPIE"],p:"MAGPIEVBA"},
+  {w:"UPDATES",a:["UPDATES"],p:"UPDATESQA"},
+  {w:"BOTANISE",a:["BOTANISE"],p:"BOTANISEN"},
+  {w:"RELATOR",a:["RELATOR", "REALTOR"],p:"RELATORAU"},
+  {w:"SENSORIA",a:["SENSORIA"],p:"SENSORIAE"},
+  {w:"DOULAS",a:["DOULAS"],p:"DOULASNUH"},
+  {w:"URODELE",a:["URODELE"],p:"URODELESS"},
+  {w:"AWAITED",a:["AWAITED"],p:"AWAITEDBI"},
+  {w:"ARMOIRE",a:["ARMOIRE"],p:"ARMOIREEU"},
+  {w:"ACEDIA",a:["ACEDIA"],p:"ACEDIAGPO"},
+  {w:"BETAINE",a:["BETAINE"],p:"BETAINEAG"},
+  {w:"EUGENOL",a:["EUGENOL"],p:"EUGENOLXO"},
+  {w:"IODINATES",a:["IODINATES"],p:"IODINATES"},
+  {w:"HEINOUS",a:["HEINOUS"],p:"HEINOUSHD"},
+  {w:"RATIONALE",a:["RATIONALE"],p:"RATIONALE"},
+  {w:"UNDERSEA",a:["UNDERSEA"],p:"UNDERSEAA"},
+  {w:"ORDINAL",a:["ORDINAL", "NAILROD"],p:"ORDINALJC"},
+  {w:"FOLIATE",a:["FOLIATE", "FLOATIE"],p:"FOLIATEZE"},
+  {w:"ERUPTION",a:["ERUPTION"],p:"ERUPTIONN"},
+  {w:"NOVENA",a:["NOVENA"],p:"NOVENALRM"},
+  {w:"DOMINATE",a:["DOMINATE"],p:"DOMINATES"},
+  {w:"SERRATION",a:["SERRATION"],p:"SERRATION"},
+  {w:"COOEES",a:["COOEES"],p:"COOEESELM"},
+  {w:"ANOMIE",a:["ANOMIE"],p:"ANOMIENER"},
+  {w:"TOASTIE",a:["TOASTIE", "OSTIATE", "OATIEST"],p:"TOASTIETA"},
+  {w:"OUTAGE",a:["OUTAGE"],p:"OUTAGERSP"},
+  {w:"ASSORTED",a:["ASSORTED"],p:"ASSORTEDT"},
+  {w:"POUNDIES",a:["POUNDIES"],p:"POUNDIESB"},
+  {w:"RIPIENO",a:["RIPIENO"],p:"RIPIENOAR"},
+  {w:"DUGITES",a:["DUGITES"],p:"DUGITESIF"},
+  {w:"AVERSION",a:["AVERSION"],p:"AVERSIONL"},
+  {w:"STATIONER",a:["STATIONER"],p:"STATIONER"},
+  {w:"INDUSIA",a:["INDUSIA"],p:"INDUSIAMO"},
+  {w:"CURIOSA",a:["CURIOSA", "CARIOUS"],p:"CURIOSADL"},
+  {w:"DONATED",a:["DONATED"],p:"DONATEDQT"},
+  {w:"FOLIAGE",a:["FOLIAGE"],p:"FOLIAGETR"},
+  {w:"FOAMED",a:["FOAMED"],p:"FOAMEDFUO"},
+  {w:"NOTARISES",a:["NOTARISES", "ASSERTION"],p:"NOTARISES"},
+  {w:"TEAROOM",a:["TEAROOM"],p:"TEAROOMNO"},
+  {w:"ROMANISED",a:["ROMANISED", "RANDOMISE"],p:"ROMANISED"},
+  {w:"TINAMOU",a:["TINAMOU", "MANITOU"],p:"TINAMOUEO"},
+  {w:"EARLDOM",a:["EARLDOM"],p:"EARLDOMTO"},
+  {w:"NOTATED",a:["NOTATED"],p:"NOTATEDWT"},
+  {w:"NEGATOR",a:["NEGATOR"],p:"NEGATORCD"},
+  {w:"ISOLATE",a:["ISOLATE"],p:"ISOLATEHS"},
+  {w:"FEARTIES",a:["FEARTIES"],p:"FEARTIESN"},
+  {w:"OUTSAILED",a:["OUTSAILED"],p:"OUTSAILED"},
+  {w:"PRONATED",a:["PRONATED"],p:"PRONATEDE"},
+  {w:"FEIJOA",a:["FEIJOA"],p:"FEIJOALNI"},
+  {w:"ESOTERIC",a:["ESOTERIC", "COTERIES"],p:"ESOTERICT"},
+  {w:"WALDOES",a:["WALDOES"],p:"WALDOESIS"},
+  {w:"TOURISM",a:["TOURISM"],p:"TOURISMON"},
+  {w:"STAMINODE",a:["STAMINODE", "DOMINATES"],p:"STAMINODE"},
+  {w:"ANTIPODES",a:["ANTIPODES"],p:"ANTIPODES"},
+  {w:"SOLITUDE",a:["SOLITUDE"],p:"SOLITUDEO"},
+  {w:"ORGANISED",a:["ORGANISED", "ORGANDIES", "GRANDIOSE"],p:"ORGANISED"},
+  {w:"ANTIPODE",a:["ANTIPODE"],p:"ANTIPODED"},
+  {w:"WEARIEST",a:["WEARIEST", "SWEATIER"],p:"WEARIESTG"},
+  {w:"DUALIST",a:["DUALIST"],p:"DUALISTOC"},
+  {w:"OPALINE",a:["OPALINE"],p:"OPALINEEL"},
+  {w:"GOURMET",a:["GOURMET"],p:"GOURMETIE"},
+  {w:"PREDATION",a:["PREDATION"],p:"PREDATION"},
+  {w:"HIDEOUT",a:["HIDEOUT"],p:"HIDEOUTIF"},
+  {w:"WAHINE",a:["WAHINE"],p:"WAHINERTC"},
+  {w:"ANTELOPE",a:["ANTELOPE"],p:"ANTELOPEK"},
+  {w:"INUTILE",a:["INUTILE"],p:"INUTILEIG"},
+  {w:"UNREALIST",a:["UNREALIST"],p:"UNREALIST"},
+  {w:"REUNITES",a:["REUNITES", "RETINUES", "ESURIENT"],p:"REUNITEST"},
+  {w:"AROUSES",a:["AROUSES"],p:"AROUSESMB"},
+  {w:"WIDEOUT",a:["WIDEOUT"],p:"WIDEOUTTT"},
+  {w:"EPITOME",a:["EPITOME"],p:"EPITOMEJE"},
+  {w:"ORANGES",a:["ORANGES", "ONAGERS"],p:"ORANGESEO"},
+  {w:"RAGOUT",a:["RAGOUT"],p:"RAGOUTIRG"},
+  {w:"APTEROUS",a:["APTEROUS"],p:"APTEROUSO"},
+  {w:"SIDEREAL",a:["SIDEREAL", "REALISED"],p:"SIDEREALN"},
+  {w:"AGROUND",a:["AGROUND"],p:"AGROUNDMU"},
+  {w:"AUDITED",a:["AUDITED"],p:"AUDITEDST"},
+  {w:"LEAGUED",a:["LEAGUED"],p:"LEAGUEDCL"},
+  {w:"GASOLINE",a:["GASOLINE"],p:"GASOLINEN"},
+  {w:"UPSTAIR",a:["UPSTAIR"],p:"UPSTAIRRV"},
+  {w:"DILATORS",a:["DILATORS"],p:"DILATORSC"},
+  {w:"TOENAILED",a:["TOENAILED"],p:"TOENAILED"},
+  {w:"OMITTED",a:["OMITTED"],p:"OMITTEDNS"},
+  {w:"LENTIGO",a:["LENTIGO"],p:"LENTIGOGT"},
+  {w:"OGIVES",a:["OGIVES"],p:"OGIVESONO"},
+  {w:"FOOTIE",a:["FOOTIE"],p:"FOOTIEIAF"},
+  {w:"SOMEONE",a:["SOMEONE"],p:"SOMEONEIN"},
+  {w:"IDEOGRAM",a:["IDEOGRAM"],p:"IDEOGRAMA"},
+  {w:"COATEE",a:["COATEE"],p:"COATEEVLK"},
+  {w:"GUITAR",a:["GUITAR"],p:"GUITARGII"},
+  {w:"TANGELOS",a:["TANGELOS"],p:"TANGELOSI"},
+  {w:"UNPAID",a:["UNPAID", "PUDINA"],p:"UNPAIDYTO"},
+  {w:"WEAPONS",a:["WEAPONS"],p:"WEAPONSFU"},
+  {w:"POSTERIAL",a:["POSTERIAL", "PELOTARIS", "EPISTOLAR", "EPILATORS"],p:"POSTERIAL"},
+  {w:"ESOTERICA",a:["ESOTERICA"],p:"ESOTERICA"},
+  {w:"AEROGELS",a:["AEROGELS"],p:"AEROGELSK"},
+  {w:"OILSEED",a:["OILSEED"],p:"OILSEEDLD"},
+  {w:"REUNION",a:["REUNION"],p:"REUNIONOA"},
+  {w:"APORIAS",a:["APORIAS"],p:"APORIASIO"},
+  {w:"LOERIES",a:["LOERIES"],p:"LOERIESIS"},
+  {w:"EMANATOR",a:["EMANATOR"],p:"EMANATORI"},
+  {w:"DESERTION",a:["DESERTION"],p:"DESERTION"},
+  {w:"IRONISED",a:["IRONISED", "DERISION"],p:"IRONISEDO"},
+  {w:"AEROBES",a:["AEROBES"],p:"AEROBESEB"},
+  {w:"AUREATE",a:["AUREATE"],p:"AUREATELA"},
+  {w:"AMPUTEE",a:["AMPUTEE"],p:"AMPUTEEOE"},
+  {w:"AUREOLE",a:["AUREOLE"],p:"AUREOLEEC"},
+  {w:"AMOUNTED",a:["AMOUNTED"],p:"AMOUNTEDO"},
+  {w:"DELETION",a:["DELETION"],p:"DELETIONG"},
+  {w:"AEROSOL",a:["AEROSOL"],p:"AEROSOLAP"},
+  {w:"NEMATODE",a:["NEMATODE"],p:"NEMATODEW"},
+  {w:"SOAPIEST",a:["SOAPIEST"],p:"SOAPIESTT"},
+  {w:"HEIAUS",a:["HEIAUS"],p:"HEIAUSAEU"},
+  {w:"AERONAUT",a:["AERONAUT"],p:"AERONAUTO"},
+  {w:"BEANIES",a:["BEANIES"],p:"BEANIESTT"},
+  {w:"SURICATE",a:["SURICATE"],p:"SURICATER"},
+  {w:"EUCIES",a:["EUCIES"],p:"EUCIESNIE"},
+  {w:"TORULAE",a:["TORULAE"],p:"TORULAEOT"},
+  {w:"SOLITAIRE",a:["SOLITAIRE"],p:"SOLITAIRE"},
+  {w:"HEROINE",a:["HEROINE"],p:"HEROINEAE"},
+  {w:"UNREELS",a:["UNREELS"],p:"UNREELSRT"},
+  {w:"PORGIES",a:["PORGIES"],p:"PORGIESEU"},
+  {w:"TONNEAU",a:["TONNEAU"],p:"TONNEAUPH"},
+  {w:"LEGATORS",a:["LEGATORS", "GLOATERS"],p:"LEGATORSE"},
+  {w:"UNEATEN",a:["UNEATEN"],p:"UNEATENAA"},
+  {w:"STEADING",a:["STEADING", "SEDATING"],p:"STEADINGC"},
+  {w:"SABOTED",a:["SABOTED", "BOASTED"],p:"SABOTEDOE"},
+  {w:"GRATINEE",a:["GRATINEE", "ENARGITE"],p:"GRATINEEO"},
+  {w:"PAROTID",a:["PAROTID"],p:"PAROTIDAC"},
+  {w:"SNOOTIER",a:["SNOOTIER"],p:"SNOOTIERK"},
+  {w:"MIAOWS",a:["MIAOWS"],p:"MIAOWSRDD"},
+  {w:"AERONAUTS",a:["AERONAUTS"],p:"AERONAUTS"},
+  {w:"THESAURI",a:["THESAURI"],p:"THESAURIJ"},
+  {w:"EPIMERA",a:["EPIMERA"],p:"EPIMERADI"},
+  {w:"BOUGIES",a:["BOUGIES"],p:"BOUGIESQL"},
+  {w:"LASSOED",a:["LASSOED"],p:"LASSOEDST"},
+  {w:"AROMATISE",a:["AROMATISE"],p:"AROMATISE"},
+  {w:"ROADIED",a:["ROADIED", "RADIOED"],p:"ROADIEDRO"},
+  {w:"MONTAGE",a:["MONTAGE", "METAGON", "MEGATON", "MAGNETO"],p:"MONTAGEUR"},
+  {w:"URAEMIA",a:["URAEMIA"],p:"URAEMIANC"},
+  {w:"ORATIONS",a:["ORATIONS"],p:"ORATIONSD"},
+  {w:"PURITAN",a:["PURITAN"],p:"PURITANED"},
+  {w:"TREASONS",a:["TREASONS", "SENATORS", "SANTEROS"],p:"TREASONSY"},
+  {w:"PERIDIA",a:["PERIDIA"],p:"PERIDIAAK"},
+  {w:"STOOLED",a:["STOOLED"],p:"STOOLEDIP"},
+  {w:"NOOGIES",a:["NOOGIES"],p:"NOOGIESIO"},
+  {w:"HIDEOUS",a:["HIDEOUS"],p:"HIDEOUSME"},
+  {w:"EGOTISED",a:["EGOTISED"],p:"EGOTISEDA"},
+  {w:"UNITARDS",a:["UNITARDS"],p:"UNITARDSI"},
+  {w:"EPISOME",a:["EPISOME"],p:"EPISOMEIC"},
+  {w:"OSMIATE",a:["OSMIATE", "ATOMISE", "ATOMIES", "AMOSITE"],p:"OSMIATEEA"},
+  {w:"ROTUNDAS",a:["ROTUNDAS"],p:"ROTUNDASE"},
+  {w:"OUTLINE",a:["OUTLINE", "ELUTION"],p:"OUTLINERT"},
+  {w:"STIFADO",a:["STIFADO"],p:"STIFADOGD"},
+  {w:"POETISED",a:["POETISED"],p:"POETISEDT"},
+  {w:"OUTRACES",a:["OUTRACES"],p:"OUTRACESO"},
+  {w:"SENECIO",a:["SENECIO"],p:"SENECIOEI"},
+  {w:"OPALINES",a:["OPALINES"],p:"OPALINESO"},
+  {w:"ADENOMAS",a:["ADENOMAS"],p:"ADENOMASB"},
+  {w:"CATENAE",a:["CATENAE"],p:"CATENAEOG"},
+  {w:"AMOEBAS",a:["AMOEBAS"],p:"AMOEBASTE"},
+  {w:"UNPAIRED",a:["UNPAIRED"],p:"UNPAIREDH"},
+  {w:"ERGODIC",a:["ERGODIC"],p:"ERGODICIO"},
+  {w:"OPERATE",a:["OPERATE"],p:"OPERATEZJ"},
+  {w:"NUMERAL",a:["NUMERAL"],p:"NUMERALPU"},
+  {w:"SOOTIER",a:["SOOTIER"],p:"SOOTIERMI"},
+  {w:"ROTATED",a:["ROTATED"],p:"ROTATEDRA"},
+  {w:"LADINOS",a:["LADINOS", "ANDISOL"],p:"LADINOSCI"},
+  {w:"EARHOLE",a:["EARHOLE"],p:"EARHOLEMA"},
+  {w:"OBTAINED",a:["OBTAINED"],p:"OBTAINEDO"},
+  {w:"EGOTISM",a:["EGOTISM"],p:"EGOTISMAE"},
+  {w:"TOWNEES",a:["TOWNEES"],p:"TOWNEESEA"},
+  {w:"OESTRONE",a:["OESTRONE"],p:"OESTRONEJ"},
+  {w:"UNEASE",a:["UNEASE"],p:"UNEASENDV"},
+  {w:"MEASLIER",a:["MEASLIER", "EMAILERS"],p:"MEASLIERC"},
+  {w:"OLEATE",a:["OLEATE"],p:"OLEATEORA"},
+  {w:"ENATIONS",a:["ENATIONS"],p:"ENATIONST"},
+  {w:"GORDITAS",a:["GORDITAS"],p:"GORDITASG"},
+  {w:"PIONEERS",a:["PIONEERS", "ISOPRENE"],p:"PIONEERSO"},
+  {w:"DUENNAS",a:["DUENNAS"],p:"DUENNASGR"},
+  {w:"TRILOGUE",a:["TRILOGUE"],p:"TRILOGUEO"},
+  {w:"LEUCITE",a:["LEUCITE"],p:"LEUCITELC"},
+  {w:"PARTITE",a:["PARTITE"],p:"PARTITELR"},
+  {w:"FOVEAE",a:["FOVEAE"],p:"FOVEAEEDE"},
+  {w:"ELONGATE",a:["ELONGATE"],p:"ELONGATER"},
+  {w:"PERIODATE",a:["PERIODATE"],p:"PERIODATE"},
+  {w:"ELASTANE",a:["ELASTANE"],p:"ELASTANEY"},
+  {w:"ANCESTOR",a:["ANCESTOR"],p:"ANCESTORN"},
+  {w:"BOUGIE",a:["BOUGIE"],p:"BOUGIEDOE"},
+  {w:"OUTEARNED",a:["OUTEARNED"],p:"OUTEARNED"},
+  {w:"DEITIES",a:["DEITIES"],p:"DEITIESEI"},
+  {w:"ROSARIA",a:["ROSARIA"],p:"ROSARIAHU"},
+  {w:"ANIMATO",a:["ANIMATO"],p:"ANIMATOUE"},
+  {w:"INSOFAR",a:["INSOFAR"],p:"INSOFARKH"},
+  {w:"OUTCRIES",a:["OUTCRIES"],p:"OUTCRIESO"},
+  {w:"PILOTED",a:["PILOTED"],p:"PILOTEDUE"},
+  {w:"DEMENTIA",a:["DEMENTIA"],p:"DEMENTIAK"},
+  {w:"FORAGED",a:["FORAGED"],p:"FORAGEDWI"},
+  {w:"PRUINOSE",a:["PRUINOSE"],p:"PRUINOSET"},
+  {w:"OAKIEST",a:["OAKIEST"],p:"OAKIESTLM"},
+  {w:"UNSORTED",a:["UNSORTED", "TONSURED", "ROUNDEST"],p:"UNSORTEDR"},
+  {w:"PERSONAE",a:["PERSONAE"],p:"PERSONAEO"},
+  {w:"URIDINE",a:["URIDINE"],p:"URIDINEIU"},
+  {w:"AERATING",a:["AERATING"],p:"AERATINGR"},
+  {w:"TINWARE",a:["TINWARE", "TAWNIER"],p:"TINWAREPT"},
+  {w:"NUMERATE",a:["NUMERATE"],p:"NUMERATEE"},
+  {w:"ISOLATES",a:["ISOLATES"],p:"ISOLATEST"},
+  {w:"AUSPICE",a:["AUSPICE"],p:"AUSPICENR"},
+  {w:"SEPTARIA",a:["SEPTARIA", "PARASITE", "ASPIRATE"],p:"SEPTARIAN"},
+  {w:"ELASIPOD",a:["ELASIPOD"],p:"ELASIPODN"},
+  {w:"AVENUES",a:["AVENUES"],p:"AVENUESHA"},
+  {w:"ROSACEA",a:["ROSACEA"],p:"ROSACEAAN"},
+  {w:"TREENAILS",a:["TREENAILS"],p:"TREENAILS"},
+  {w:"LEISURE",a:["LEISURE"],p:"LEISURERG"},
+  {w:"TENUTOS",a:["TENUTOS"],p:"TENUTOSLO"},
+  {w:"NOVATED",a:["NOVATED"],p:"NOVATEDMR"},
+  {w:"NEONATES",a:["NEONATES"],p:"NEONATESK"},
+  {w:"ANODISES",a:["ANODISES"],p:"ANODISESC"},
+  {w:"TOTARA",a:["TOTARA"],p:"TOTARAETE"},
+  {w:"AVIATOR",a:["AVIATOR"],p:"AVIATORNO"}
+];
 
 function filterValid(arr){
   return arr.filter(p=>{
@@ -1490,6 +2354,8 @@ function filterValid(arr){
 
 const stdPuzzles=filterValid(STANDARD);
 const mcPuzzles=filterValid(MOST_COMMON);
+const ml2Puzzles=filterValid(MY_LIST_2);
+const allMyListPuzzles=filterValid([...STANDARD,...MY_LIST_2]);
 
 // ── WRONG LIST (shared, with solve counts) ────────────────────────────────────
 const WRONG_KEY='stemming_wrong_v3';
@@ -1527,20 +2393,51 @@ function getSolveCount(p){
   return solves[pkey(p)]||0;
 }
 
+const CCW_WRONG_KEY='stemming_ccw_wrong_v1';
+const CCW_SOLVE_KEY='stemming_ccw_solves_v1';
+function loadCCWWrong(){try{return JSON.parse(localStorage.getItem(CCW_WRONG_KEY)||'[]')}catch(e){return[]}}
+function saveCCWWrong(a){localStorage.setItem(CCW_WRONG_KEY,JSON.stringify(a))}
+function loadCCWSolves(){try{return JSON.parse(localStorage.getItem(CCW_SOLVE_KEY)||'{}')}catch(e){return{}}}
+function saveCCWSolves(o){localStorage.setItem(CCW_SOLVE_KEY,JSON.stringify(o))}
+function ccwKey(p){return p.w+'||'+p.a.join(',')}
+function addToCCWWrong(p){
+  const arr=loadCCWWrong(),k=ccwKey(p);
+  if(!arr.find(x=>ccwKey(x)===k)){arr.push(p);saveCCWWrong(arr);}
+  updateBadges();
+}
+function recordCCWCorrect(p){
+  const k=ccwKey(p);
+  const solves=loadCCWSolves();
+  solves[k]=(solves[k]||0)+1;
+  if(solves[k]>=2){
+    const arr=loadCCWWrong().filter(x=>ccwKey(x)!==k);
+    saveCCWWrong(arr);
+    delete solves[k];
+  }
+  saveCCWSolves(solves);
+  updateBadges();
+}
+function getCCWSolveCount(p){return (loadCCWSolves()[ccwKey(p)]||0);}
+
 function updateBadges(){
   const n=loadWrong().length;
-  document.getElementById('wb-all').textContent=n;
+  const el=document.getElementById('wb-stemming');
+  if(el)el.textContent=n;
+  const n2=loadCCWWrong().length;
+  const el2=document.getElementById('wb-ccw');
+  if(el2)el2.textContent=n2;
 }
 
 // ── MODE CONFIG ───────────────────────────────────────────────────────────────
-const TMAX={'easy':10,'hard':30,'mc-easy':10,'mc-hard':30,'wrong-easy':10,'wrong-hard':30};
-const ISCRAM={'easy':false,'hard':true,'mc-easy':false,'mc-hard':true,'wrong-easy':false,'wrong-hard':true};
-const ISWRONG={'wrong-easy':true,'wrong-hard':true};
-const ISMC={'mc-easy':true,'mc-hard':true};
+const TMAX={'easy':10,'hard':30,'mc-easy':10,'mc-hard':30,'ml2-easy':10,'ml2-hard':30,'all-easy':10,'all-hard':30,'ccw-easy':10,'ccw-hard':30,'wrong-easy':10,'wrong-hard':30,'cwrong-easy':10,'cwrong-hard':30};
+const ISCRAM={'easy':false,'hard':true,'mc-easy':false,'mc-hard':true,'ml2-easy':false,'ml2-hard':true,'all-easy':false,'all-hard':true,'ccw-easy':false,'ccw-hard':true,'wrong-easy':false,'wrong-hard':true,'cwrong-easy':false,'cwrong-hard':true};
+const ISWRONG={'wrong-easy':true,'wrong-hard':true,'cwrong-easy':true,'cwrong-hard':true};
+const ISCCW={'ccw-easy':true,'ccw-hard':true,'cwrong-easy':true,'cwrong-hard':true};
+const ISMC={'mc-easy':true,'mc-hard':true,'ml2-easy':true,'ml2-hard':true,'all-easy':true,'all-hard':true};
 const TYPING_WINDOW=5;
 
 let mode='easy';
-let orders={easy:[],hard:[],'mc-easy':[],'mc-hard':[],'wrong-easy':[],'wrong-hard':[]};
+let orders={easy:[],hard:[],'mc-easy':[],'mc-hard':[],'ml2-easy':[],'ml2-hard':[],'all-easy':[],'all-hard':[],'ccw-easy':[],'ccw-hard':[],'wrong-easy':[],'wrong-hard':[],'cwrong-easy':[],'cwrong-hard':[]};
 let idx=0,score=0,streak=0,roundNum=1;
 let mainIv=null,typingIv=null;
 let mainTime=10,typingTime=TYPING_WINDOW;
@@ -1548,8 +2445,12 @@ let phase='main';
 let current=null;
 
 function getBaseList(m){
-  if(ISWRONG[m])return loadWrong();
-  if(ISMC[m])return mcPuzzles;
+  if(m==='wrong-easy'||m==='wrong-hard')return loadWrong();
+  if(m==='cwrong-easy'||m==='cwrong-hard')return loadCCWWrong();
+  if(m==='mc-easy'||m==='mc-hard')return mcPuzzles;
+  if(m==='ml2-easy'||m==='ml2-hard')return ml2Puzzles;
+  if(m==='all-easy'||m==='all-hard')return allMyListPuzzles;
+  if(m==='ccw-easy'||m==='ccw-hard')return CCW;
   return stdPuzzles;
 }
 
@@ -1559,12 +2460,20 @@ function resetOrder(m){
 }
 
 const MODE_LABELS={
-  'easy':       {text:'my list — easy',        cls:'ml-easy'},
-  'hard':       {text:'my list — hard',        cls:'ml-hard'},
-  'mc-easy':    {text:'most common — easy',    cls:'ml-mc-easy'},
-  'mc-hard':    {text:'most common — hard',    cls:'ml-mc-hard'},
-  'wrong-easy': {text:'incorrect — easy',      cls:'ml-wrong-easy'},
-  'wrong-hard': {text:'incorrect — hard',      cls:'ml-wrong-hard'},
+  'easy':         {text:'my list 1 — easy',              cls:'ml-easy'},
+  'hard':         {text:'my list 1 — hard',              cls:'ml-hard'},
+  'mc-easy':      {text:'most common stemming — easy',   cls:'ml-mc-easy'},
+  'mc-hard':      {text:'most common stemming — hard',   cls:'ml-mc-hard'},
+  'ml2-easy':     {text:'my list 2 — easy',              cls:'ml-easy'},
+  'ml2-hard':     {text:'my list 2 — hard',              cls:'ml-hard'},
+  'all-easy':     {text:'my list all — easy',            cls:'ml-mc-easy'},
+  'all-hard':     {text:'my list all — hard',            cls:'ml-mc-hard'},
+  'ccw-easy':     {text:'common countdown words — easy', cls:'ml-mc-hard'},
+  'ccw-hard':     {text:'common countdown words — hard', cls:'ml-mc-hard'},
+  'wrong-easy':   {text:'incorrect stemming — easy',     cls:'ml-wrong-easy'},
+  'wrong-hard':   {text:'incorrect stemming — hard',     cls:'ml-wrong-hard'},
+  'cwrong-easy':  {text:'incorrect — easy',              cls:'ml-wrong-hard'},
+  'cwrong-hard':  {text:'incorrect — hard',              cls:'ml-wrong-hard'},
 };
 
 function toggleSidebar(){
@@ -1588,9 +2497,13 @@ function setMode(m){
   const cls={
     'easy':'active-easy','hard':'active-hard',
     'mc-easy':'active-mc-easy','mc-hard':'active-mc-hard',
-    'wrong-easy':'active-wrong-easy','wrong-hard':'active-wrong-hard'
+    'ml2-easy':'active-easy','ml2-hard':'active-hard',
+    'all-easy':'active-mc-easy','all-hard':'active-mc-hard',
+    'ccw-easy':'active-mc-hard','ccw-hard':'active-mc-hard',
+    'wrong-easy':'active-wrong-easy','wrong-hard':'active-wrong-hard',
+    'cwrong-easy':'active-wrong-hard','cwrong-hard':'active-wrong-hard'
   };
-  ['easy','hard','mc-easy','mc-hard','wrong-easy','wrong-hard'].forEach(id=>{
+  ['easy','hard','mc-easy','mc-hard','ml2-easy','ml2-hard','all-easy','all-hard','ccw-easy','ccw-hard','wrong-easy','wrong-hard','cwrong-easy','cwrong-hard'].forEach(id=>{
     const el=document.getElementById('btn-'+id);
     if(el){el.className='sb-btn';}
   });
@@ -1605,8 +2518,16 @@ function setMode(m){
   document.getElementById('score').textContent=0;
   document.getElementById('streak').textContent=0;
 
-  if(ISWRONG[m]){
+  if(m==='wrong-easy'||m==='wrong-hard'){
     const w=loadWrong();
+    if(w.length===0){
+      document.getElementById('game-area').style.display='none';
+      document.getElementById('empty-state').style.display='block';
+      return;
+    }
+  }
+  if(m==='cwrong-easy'||m==='cwrong-hard'){
+    const w=loadCCWWrong();
     if(w.length===0){
       document.getElementById('game-area').style.display='none';
       document.getElementById('empty-state').style.display='block';
@@ -1646,22 +2567,27 @@ function loadPuzzle(){
   document.getElementById('feedback').className='';
   document.getElementById('reveal-text').textContent='';
   document.getElementById('round').textContent=roundNum;
-  document.getElementById('ans-meta').textContent=current[2][0].length+' letters';
+  const isCCW=!!ISCCW[mode];
+  const isWrong=!!(mode==='wrong-easy'||mode==='wrong-hard'||mode==='cwrong-easy'||mode==='cwrong-hard');
+  const isMC=!!ISMC[mode];
+  const answers=isCCW?current.a:current[2];
+  const ff=isCCW?false:current[3];
+
+  document.getElementById('ans-meta').textContent=answers[0].length+' letters';
   document.getElementById('typing-ind').textContent='';
   document.getElementById('typing-ind').className='typing-indicator';
   document.getElementById('def-box').style.display='none';
 
-  const ff=current[3];
-  const isWrong=!!ISWRONG[mode];
-  const isMC=!!ISMC[mode];
-
   document.getElementById('badge-ff').style.display=ff?'inline-block':'none';
-  document.getElementById('badge-wr').style.display=isWrong?'inline-block':'none';
-  document.getElementById('badge-mc').style.display=(!isWrong&&isMC)?'inline-block':'none';
+  document.getElementById('badge-wr').style.display=(isWrong&&!isCCW)?'inline-block':'none';
+  document.getElementById('badge-mc').style.display=(!isWrong&&isMC&&!isCCW)?'inline-block':'none';
 
-  // solve progress for wrong mode
   const sp=document.getElementById('solve-progress');
-  if(isWrong){
+  if(isWrong&&isCCW){
+    const n=getCCWSolveCount(current);
+    sp.style.display='block';
+    sp.innerHTML=`<span class="solve-pip ${n>=1?'filled':''}"></span><span class="solve-pip ${n>=2?'filled':''}"></span> ${n}/2 correct to remove`;
+  } else if(isWrong){
     const n=getSolveCount(current);
     sp.style.display='block';
     sp.innerHTML=`<span class="solve-pip ${n>=1?'filled':''}"></span><span class="solve-pip ${n>=2?'filled':''}"></span> ${n}/2 correct to remove`;
@@ -1669,7 +2595,17 @@ function loadPuzzle(){
     sp.style.display='none';
   }
 
-  if(!ISCRAM[mode]){
+  if(isCCW&&ISCRAM[mode]){
+    document.getElementById('easy-section').style.display='none';
+    document.getElementById('hard-section').style.display='';
+    document.getElementById('puzzle-label').textContent='find the word — 9 letters';
+    document.getElementById('scrambled-display').textContent=scramble(current.p);
+  } else if(isCCW){
+    document.getElementById('easy-section').style.display='';
+    document.getElementById('hard-section').style.display='none';
+    document.getElementById('puzzle-label').textContent='unscramble the word';
+    document.getElementById('base-display').textContent=scramble(current.w);
+  } else if(!ISCRAM[mode]){
     document.getElementById('easy-section').style.display='';
     document.getElementById('hard-section').style.display='none';
     document.getElementById('puzzle-label').textContent=ff?'this word is a false friend:':'base word + new letter';
@@ -1686,6 +2622,7 @@ function loadPuzzle(){
     document.getElementById('puzzle-label').textContent=ff?'unscramble — false friend':'unscramble all letters';
     document.getElementById('scrambled-display').textContent=scramble(current[0]+current[1]);
   }
+
 
   document.getElementById('timer-num').textContent=Math.ceil(mainTime);
   updateBar(mainTime,TMAX[mode]);
@@ -1736,28 +2673,44 @@ function timeUp(){
   inp.disabled=true;inp.className='iw';
   setFb('time up','fm');
   document.getElementById('typing-ind').textContent='';
-  addToWrong(current);
+  if(ISCCW[mode]){addToCCWWrong(current);}else{addToWrong(current);}
   showAns();
 }
 
-function showDef(words){
+function showDef(words,typedWord){
   const db=document.getElementById('def-box');
   const dw=document.getElementById('def-word');
   const dt=document.getElementById('def-text');
-  const hits=words.map(w=>DEFS[w.toUpperCase()]).filter(Boolean);
-  if(hits.length>0){
-    dw.textContent=words.map(w=>w.toUpperCase()).join(' / ');
-    dt.textContent=hits[0];
+  const upper=words.map(w=>w.toUpperCase());
+  const hits=upper.map(w=>DEFS[w]).filter(Boolean);
+  let altHtml='';
+  if(typedWord && upper.length>1){
+    const others=upper.filter(w=>w!==typedWord.toUpperCase());
+    if(others.length>0){
+      altHtml=`<div style="margin-top:6px;font-size:0.75rem;color:var(--success)">also correct: ${others.join(', ')}</div>`;
+    }
+  }
+  if(hits.length>0||altHtml){
+    dw.textContent=upper.join(' / ');
+    dt.innerHTML=(hits[0]||'')+altHtml;
     db.style.display='block';
+  } else if(upper.length>1&&typedWord){
+    const others=upper.filter(w=>w!==typedWord.toUpperCase());
+    if(others.length>0){
+      dw.textContent=upper.join(' / ');
+      dt.innerHTML=`<div style="font-size:0.75rem;color:var(--success)">also correct: ${others.join(', ')}</div>`;
+      db.style.display='block';
+    }
   } else {
     db.style.display='none';
   }
 }
 
 function showAns(){
-  const words=current[2].map(w=>`<span class="rw">${w.toUpperCase()}</span>`).join(' / ');
+  const ans=ISCCW[mode]?current.a:current[2];
+  const words=ans.map(w=>`<span class="rw">${w.toUpperCase()}</span>`).join(' / ');
   document.getElementById('reveal-text').innerHTML='→ '+words;
-  showDef(current[2]);
+  showDef(ans);
 }
 
 function setFb(txt,cls){
@@ -1769,7 +2722,8 @@ document.getElementById('answer-input').addEventListener('input',function(){
   if(phase==='done')return;
   const val=this.value.trim().toLowerCase();
   if(val.length>0&&phase==='main')startTypingPhase();
-  if(current[2].map(a=>a.toLowerCase()).includes(val)){
+  const _answers=ISCCW[mode]?current.a:current[2];
+  if(_answers.map(a=>a.toLowerCase()).includes(val)){
     clearInterval(mainIv);clearInterval(typingIv);
     phase='done';score++;streak++;
     document.getElementById('score').textContent=score;
@@ -1779,8 +2733,10 @@ document.getElementById('answer-input').addEventListener('input',function(){
     document.getElementById('typing-ind').textContent='';
     updateBar(1,1);
     document.getElementById('timer-num').textContent='✓';
-    showDef(current[2]);
-    if(ISWRONG[mode])recordCorrect(current);
+    const _ans2=ISCCW[mode]?current.a:current[2];
+    showDef(_ans2,val);
+    if(mode==='wrong-easy'||mode==='wrong-hard')recordCorrect(current);
+    if(mode==='cwrong-easy'||mode==='cwrong-hard')recordCCWCorrect(current);
     setTimeout(nextPuzzle,1400);
   }
 });
@@ -1794,7 +2750,7 @@ function revealAnswer(){
   inp.disabled=true;inp.className='iw';
   document.getElementById('typing-ind').textContent='';
   setFb('revealed','fm');
-  addToWrong(current);
+  if(ISCCW[mode]){addToCCWWrong(current);}else{addToWrong(current);}
   showAns();
 }
 
