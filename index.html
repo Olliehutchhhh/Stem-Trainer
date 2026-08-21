@@ -142,6 +142,9 @@ header h1{font-family:var(--mono);font-size:clamp(1.5rem,4vw,2.2rem);font-weight
 #empty-state p{font-size:0.78rem;}
 #empty-state span{color:var(--accent);}
 .solve-progress{font-size:0.68rem;font-family:var(--mono);color:var(--muted2);margin-top:4px;}
+.diff-toggle{display:flex;gap:0;margin-bottom:1rem;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--surface2);width:fit-content;}
+.diff-btn{padding:7px 20px;font-family:var(--mono);font-size:0.75rem;background:transparent;border:none;color:var(--muted2);cursor:pointer;transition:all 0.15s;}
+.diff-btn.active{background:var(--surface);color:var(--text);font-weight:500;}
 .def-box{margin-top:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;border-left:2px solid var(--border);font-size:0.78rem;color:var(--muted2);font-family:var(--sans);line-height:1.5;min-height:0;}
 .def-word{font-family:var(--mono);font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px;}
 .solve-pip{display:inline-block;width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);margin-right:3px;}
@@ -152,11 +155,28 @@ body{
   transition:padding-left 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 @media(max-width:600px){
-  #sidebar{position:fixed;z-index:200;}
-  #sidebar.open{width:80vw;max-width:280px;}
+  #sidebar{position:fixed;top:0;left:0;right:0;bottom:auto;width:100%!important;height:44px;border-right:none;border-bottom:1px solid var(--border);flex-direction:row;align-items:center;overflow:hidden;z-index:200;transition:height 0.25s cubic-bezier(0.4,0,0.2,1);}
+  #sidebar.open{height:100vh;height:100dvh;flex-direction:column;align-items:stretch;}
+  #sidebar-toggle{border-bottom:none;min-height:44px;padding:0 16px;flex-direction:row;gap:10px;}
+  #sidebar.open #sidebar-toggle{border-bottom:1px solid var(--border);}
+  #sidebar-toggle-icon{font-size:14px;}
+  #sidebar.open #sidebar-toggle-icon{transform:rotate(90deg);}
+  #sidebar-toggle-label{opacity:1!important;font-size:0.72rem;}
+  #sidebar-content{opacity:0;pointer-events:none;padding:8px 12px;overflow-y:auto;}
+  #sidebar.open #sidebar-content{opacity:1;pointer-events:all;}
   #sidebar.open~#overlay{display:block;}
-  body{padding-left:calc(56px + 0.5rem);}
-  body.sb-open{padding-left:calc(56px + 0.5rem);}
+  body{padding-left:0;padding-top:calc(44px + 0.5rem);}
+  body.sb-open{padding-left:0;}
+  header{margin-bottom:0.75rem;}
+  .countdown-title{gap:3px;}
+  .countdown-tile{width:clamp(26px,8vw,36px);height:clamp(26px,8vw,36px);font-size:clamp(0.8rem,4vw,1.1rem);border-radius:3px;}
+  #mode-label{font-size:0.72rem;margin-bottom:0.5rem;}
+  .stats-row{gap:6px;margin-bottom:1rem;}
+  .stat{padding:8px 4px;}
+  .stat-label{font-size:0.6rem;margin-bottom:2px;}
+  .stat-val{font-size:1.1rem;}
+  .card{padding:1rem;}
+  .container{max-width:100%;}
 }
 @media(min-width:601px){
   #overlay{display:none!important;}
@@ -173,55 +193,29 @@ body{
   </div>
   <div id="sidebar-content">
     <div class="sb-section">my list 1 <span style="opacity:0.5;font-weight:400">· 347</span></div>
-    <button class="sb-btn active-easy" id="btn-easy" onclick="pickMode('easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-hard" onclick="pickMode('hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
-    </button>
+    <button class="sb-btn active-easy" id="btn-easy" onclick="pickSection('easy')"><span class="sb-name">my list 1</span></button>
     <div class="sb-section">my list 2 <span style="opacity:0.5;font-weight:400">· 62</span></div>
-    <button class="sb-btn" id="btn-ml2-easy" onclick="pickMode('ml2-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-ml2-hard" onclick="pickMode('ml2-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
-    </button>
+    <button class="sb-btn" id="btn-ml2" onclick="pickSection('ml2')"><span class="sb-name">my list 2</span></button>
     <div class="sb-section">my list — all <span style="opacity:0.5;font-weight:400">· 409</span></div>
-    <button class="sb-btn" id="btn-all-easy" onclick="pickMode('all-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-all-hard" onclick="pickMode('all-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
-    </button>
-    <div class="sb-section">most common — stemming <span style="opacity:0.5;font-weight:400">· 277</span></div>
-    <button class="sb-btn" id="btn-mc-easy" onclick="pickMode('mc-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-mc-hard" onclick="pickMode('mc-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
-    </button>
+    <button class="sb-btn" id="btn-all" onclick="pickSection('all')"><span class="sb-name">my list — all</span></button>
+    <div class="sb-section">most common stemming <span style="opacity:0.5;font-weight:400">· 277</span></div>
+    <button class="sb-btn" id="btn-mc" onclick="pickSection('mc')"><span class="sb-name">most common stemming</span></button>
     <div class="sb-section">common countdown words <span style="opacity:0.5;font-weight:400">· 701</span></div>
-    <button class="sb-btn" id="btn-ccw-easy" onclick="pickMode('ccw-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">unscramble · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-ccw-hard" onclick="pickMode('ccw-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">9 letters · 30s</span>
-    </button>
+    <button class="sb-btn" id="btn-ccw-g1" onclick="pickSection('ccw-g1')"><span class="sb-name">group 1</span><span class="sb-sub">words 1–70</span></button>
+    <button class="sb-btn" id="btn-ccw-g2" onclick="pickSection('ccw-g2')"><span class="sb-name">group 2</span><span class="sb-sub">words 71–140</span></button>
+    <button class="sb-btn" id="btn-ccw-g3" onclick="pickSection('ccw-g3')"><span class="sb-name">group 3</span><span class="sb-sub">words 141–210</span></button>
+    <button class="sb-btn" id="btn-ccw-g4" onclick="pickSection('ccw-g4')"><span class="sb-name">group 4</span><span class="sb-sub">words 211–280</span></button>
+    <button class="sb-btn" id="btn-ccw-g5" onclick="pickSection('ccw-g5')"><span class="sb-name">group 5</span><span class="sb-sub">words 281–350</span></button>
+    <button class="sb-btn" id="btn-ccw-g6" onclick="pickSection('ccw-g6')"><span class="sb-name">group 6</span><span class="sb-sub">words 351–420</span></button>
+    <button class="sb-btn" id="btn-ccw-g7" onclick="pickSection('ccw-g7')"><span class="sb-name">group 7</span><span class="sb-sub">words 421–490</span></button>
+    <button class="sb-btn" id="btn-ccw-g8" onclick="pickSection('ccw-g8')"><span class="sb-name">group 8</span><span class="sb-sub">words 491–560</span></button>
+    <button class="sb-btn" id="btn-ccw-g9" onclick="pickSection('ccw-g9')"><span class="sb-name">group 9</span><span class="sb-sub">words 561–630</span></button>
+    <button class="sb-btn" id="btn-ccw-g10" onclick="pickSection('ccw-g10')"><span class="sb-name">group 10</span><span class="sb-sub">words 631–701</span></button>
     <div class="sb-section">incorrect — stemming <span class="wb" id="wb-stemming">0</span></div>
-    <button class="sb-btn" id="btn-wrong-easy" onclick="pickMode('wrong-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">word + letter · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-wrong-hard" onclick="pickMode('wrong-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">all scrambled · 30s</span>
-    </button>
+    <button class="sb-btn" id="btn-wrong" onclick="pickSection('wrong')"><span class="sb-name">incorrect — stemming</span></button>
     <div class="sb-section">incorrect <span class="wb" id="wb-ccw">0</span></div>
-    <button class="sb-btn" id="btn-cwrong-easy" onclick="pickMode('cwrong-easy')">
-      <span class="sb-name">easy</span><span class="sb-sub">unscramble · 10s</span>
-    </button>
-    <button class="sb-btn" id="btn-cwrong-hard" onclick="pickMode('cwrong-hard')">
-      <span class="sb-name">hard</span><span class="sb-sub">9 letters · 30s</span>
-    </button>
-  </div>
+    <button class="sb-btn" id="btn-cwrong" onclick="pickSection('cwrong')"><span class="sb-name">incorrect — countdown</span></button>
+    </div>
 </div>
 <div id="overlay" onclick="closeSidebar()"></div>
 
@@ -240,6 +234,10 @@ body{
 </header>
 <div class="container">
 
+  <div class="diff-toggle">
+    <button class="diff-btn active" id="toggle-easy" onclick="setDifficulty('easy')">easy</button>
+    <button class="diff-btn" id="toggle-hard" onclick="setDifficulty('hard')">hard</button>
+  </div>
   <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
 
   <div class="stats-row">
@@ -2344,6 +2342,43 @@ const CCW=[
   {w:"AVIATOR",a:["AVIATOR"],p:"AVIATORNO"}
 ];
 
+// ── CCW GROUPS (10 × 70) ─────────────────────────────────────────────────────
+const CCW_GROUPS={};
+for(let _g=0;_g<10;_g++){const s=_g*70,e=_g===9?CCW.length:s+70;CCW_GROUPS['ccw-g'+(_g+1)]=CCW.slice(s,e);}
+
+let currentSection='easy';
+let currentDifficulty='easy';
+
+function pickSection(sec){
+  closeSidebar();
+  currentSection=sec;
+  document.querySelectorAll('.sb-btn').forEach(b=>b.className='sb-btn');
+  const el=document.getElementById('btn-'+sec);
+  if(el){const isW=sec==='wrong'||sec==='cwrong';const isCCW=sec.startsWith('ccw');el.classList.add(isW?'active-wrong-easy':isCCW?'active-mc-hard':'active-easy');}
+  applyMode();
+}
+
+function setDifficulty(d){
+  currentDifficulty=d;
+  document.getElementById('toggle-easy').classList.toggle('active',d==='easy');
+  document.getElementById('toggle-hard').classList.toggle('active',d==='hard');
+  applyMode();
+}
+
+function applyMode(){
+  const sec=currentSection,diff=currentDifficulty;
+  let m;
+  if(sec==='easy')m=diff==='hard'?'hard':'easy';
+  else if(sec==='ml2')m=diff==='hard'?'ml2-hard':'ml2-easy';
+  else if(sec==='all')m=diff==='hard'?'all-hard':'all-easy';
+  else if(sec==='mc')m=diff==='hard'?'mc-hard':'mc-easy';
+  else if(sec.startsWith('ccw-g'))m=diff==='hard'?sec+'-hard':sec+'-easy';
+  else if(sec==='wrong')m=diff==='hard'?'wrong-hard':'wrong-easy';
+  else if(sec==='cwrong')m=diff==='hard'?'cwrong-hard':'cwrong-easy';
+  else m='easy';
+  setMode(m);
+}
+
 function filterValid(arr){
   return arr.filter(p=>{
     if(p[3])return true;
@@ -2429,15 +2464,15 @@ function updateBadges(){
 }
 
 // ── MODE CONFIG ───────────────────────────────────────────────────────────────
-const TMAX={'easy':10,'hard':30,'mc-easy':10,'mc-hard':30,'ml2-easy':10,'ml2-hard':30,'all-easy':10,'all-hard':30,'ccw-easy':10,'ccw-hard':30,'wrong-easy':10,'wrong-hard':30,'cwrong-easy':10,'cwrong-hard':30};
-const ISCRAM={'easy':false,'hard':true,'mc-easy':false,'mc-hard':true,'ml2-easy':false,'ml2-hard':true,'all-easy':false,'all-hard':true,'ccw-easy':false,'ccw-hard':true,'wrong-easy':false,'wrong-hard':true,'cwrong-easy':false,'cwrong-hard':true};
+const TMAX={'easy':10,'hard':30,'mc-easy':10,'mc-hard':30,'ml2-easy':10,'ml2-hard':30,'all-easy':10,'all-hard':30,'ccw-easy':10,'ccw-hard':30,'ccw-g1-easy':10,'ccw-g1-hard':30,'ccw-g2-easy':10,'ccw-g2-hard':30,'ccw-g3-easy':10,'ccw-g3-hard':30,'ccw-g4-easy':10,'ccw-g4-hard':30,'ccw-g5-easy':10,'ccw-g5-hard':30,'ccw-g6-easy':10,'ccw-g6-hard':30,'ccw-g7-easy':10,'ccw-g7-hard':30,'ccw-g8-easy':10,'ccw-g8-hard':30,'ccw-g9-easy':10,'ccw-g9-hard':30,'ccw-g10-easy':10,'ccw-g10-hard':30,'wrong-easy':10,'wrong-hard':30,'cwrong-easy':10,'cwrong-hard':30};
+const ISCRAM={'easy':false,'hard':true,'mc-easy':false,'mc-hard':true,'ml2-easy':false,'ml2-hard':true,'all-easy':false,'all-hard':true,'ccw-easy':false,'ccw-hard':true,'ccw-g1-easy':false,'ccw-g1-hard':true,'ccw-g2-easy':false,'ccw-g2-hard':true,'ccw-g3-easy':false,'ccw-g3-hard':true,'ccw-g4-easy':false,'ccw-g4-hard':true,'ccw-g5-easy':false,'ccw-g5-hard':true,'ccw-g6-easy':false,'ccw-g6-hard':true,'ccw-g7-easy':false,'ccw-g7-hard':true,'ccw-g8-easy':false,'ccw-g8-hard':true,'ccw-g9-easy':false,'ccw-g9-hard':true,'ccw-g10-easy':false,'ccw-g10-hard':true,'wrong-easy':false,'wrong-hard':true,'cwrong-easy':false,'cwrong-hard':true};
 const ISWRONG={'wrong-easy':true,'wrong-hard':true,'cwrong-easy':true,'cwrong-hard':true};
-const ISCCW={'ccw-easy':true,'ccw-hard':true,'cwrong-easy':true,'cwrong-hard':true};
+const ISCCW={'ccw-easy':true,'ccw-hard':true,'ccw-g1-easy':true,'ccw-g1-hard':true,'ccw-g2-easy':true,'ccw-g2-hard':true,'ccw-g3-easy':true,'ccw-g3-hard':true,'ccw-g4-easy':true,'ccw-g4-hard':true,'ccw-g5-easy':true,'ccw-g5-hard':true,'ccw-g6-easy':true,'ccw-g6-hard':true,'ccw-g7-easy':true,'ccw-g7-hard':true,'ccw-g8-easy':true,'ccw-g8-hard':true,'ccw-g9-easy':true,'ccw-g9-hard':true,'ccw-g10-easy':true,'ccw-g10-hard':true,'cwrong-easy':true,'cwrong-hard':true};
 const ISMC={'mc-easy':true,'mc-hard':true,'ml2-easy':true,'ml2-hard':true,'all-easy':true,'all-hard':true};
 const TYPING_WINDOW=5;
 
 let mode='easy';
-let orders={easy:[],hard:[],'mc-easy':[],'mc-hard':[],'ml2-easy':[],'ml2-hard':[],'all-easy':[],'all-hard':[],'ccw-easy':[],'ccw-hard':[],'wrong-easy':[],'wrong-hard':[],'cwrong-easy':[],'cwrong-hard':[]};
+let orders={easy:[],hard:[],'mc-easy':[],'mc-hard':[],'ml2-easy':[],'ml2-hard':[],'all-easy':[],'all-hard':[],'ccw-easy':[],'ccw-hard':[],'ccw-g1-easy':[],'ccw-g1-hard':[],'ccw-g2-easy':[],'ccw-g2-hard':[],'ccw-g3-easy':[],'ccw-g3-hard':[],'ccw-g4-easy':[],'ccw-g4-hard':[],'ccw-g5-easy':[],'ccw-g5-hard':[],'ccw-g6-easy':[],'ccw-g6-hard':[],'ccw-g7-easy':[],'ccw-g7-hard':[],'ccw-g8-easy':[],'ccw-g8-hard':[],'ccw-g9-easy':[],'ccw-g9-hard':[],'ccw-g10-easy':[],'ccw-g10-hard':[],'wrong-easy':[],'wrong-hard':[],'cwrong-easy':[],'cwrong-hard':[]};
 let idx=0,score=0,streak=0,roundNum=1;
 let mainIv=null,typingIv=null;
 let mainTime=10,typingTime=TYPING_WINDOW;
@@ -2451,6 +2486,7 @@ function getBaseList(m){
   if(m==='ml2-easy'||m==='ml2-hard')return ml2Puzzles;
   if(m==='all-easy'||m==='all-hard')return allMyListPuzzles;
   if(m==='ccw-easy'||m==='ccw-hard')return CCW;
+  for(let _g=1;_g<=10;_g++){if(m===`ccw-g${_g}-easy`||m===`ccw-g${_g}-hard`)return CCW_GROUPS[`ccw-g${_g}`];}
   return stdPuzzles;
 }
 
@@ -2468,24 +2504,28 @@ const MODE_LABELS={
   'ml2-hard':     {text:'my list 2 — hard',              cls:'ml-hard'},
   'all-easy':     {text:'my list all — easy',            cls:'ml-mc-easy'},
   'all-hard':     {text:'my list all — hard',            cls:'ml-mc-hard'},
-  'ccw-easy':     {text:'common countdown words — easy', cls:'ml-mc-hard'},
-  'ccw-hard':     {text:'common countdown words — hard', cls:'ml-mc-hard'},
+  'ccw-easy':     {text:'countdown words — easy',        cls:'ml-mc-hard'},
+  'ccw-hard':     {text:'countdown words — hard',        cls:'ml-mc-hard'},
   'wrong-easy':   {text:'incorrect stemming — easy',     cls:'ml-wrong-easy'},
   'wrong-hard':   {text:'incorrect stemming — hard',     cls:'ml-wrong-hard'},
   'cwrong-easy':  {text:'incorrect — easy',              cls:'ml-wrong-hard'},
   'cwrong-hard':  {text:'incorrect — hard',              cls:'ml-wrong-hard'},
 };
+for(let _g=1;_g<=10;_g++){MODE_LABELS[`ccw-g${_g}-easy`]={text:`countdown group ${_g} — easy`,cls:'ml-mc-hard'};MODE_LABELS[`ccw-g${_g}-hard`]={text:`countdown group ${_g} — hard`,cls:'ml-mc-hard'};}
 
 function toggleSidebar(){
   const sb=document.getElementById('sidebar');
   sb.classList.toggle('open');
   if(window.innerWidth>600){
-    document.body.classList.toggle('sb-open', sb.classList.contains('open'));
+    document.body.classList.toggle('sb-open',sb.classList.contains('open'));
+  } else {
+    document.body.style.overflow=sb.classList.contains('open')?'hidden':'';
   }
 }
 function closeSidebar(){
   document.getElementById('sidebar').classList.remove('open');
   document.body.classList.remove('sb-open');
+  document.body.style.overflow='';
 }
 function pickMode(m){
   closeSidebar();
@@ -2503,12 +2543,14 @@ function setMode(m){
     'wrong-easy':'active-wrong-easy','wrong-hard':'active-wrong-hard',
     'cwrong-easy':'active-wrong-hard','cwrong-hard':'active-wrong-hard'
   };
-  ['easy','hard','mc-easy','mc-hard','ml2-easy','ml2-hard','all-easy','all-hard','ccw-easy','ccw-hard','wrong-easy','wrong-hard','cwrong-easy','cwrong-hard'].forEach(id=>{
-    const el=document.getElementById('btn-'+id);
-    if(el){el.className='sb-btn';}
-  });
-  const el=document.getElementById('btn-'+m);
-  if(el)el.classList.add(cls[m]);
+  for(let _g=1;_g<=10;_g++){cls[`ccw-g${_g}-easy`]='active-mc-hard';cls[`ccw-g${_g}-hard`]='active-mc-hard';}
+  const _allBtns=['easy','ml2','all','mc','wrong','cwrong',...Array.from({length:10},(_,i)=>`ccw-g${i+1}`)];
+  _allBtns.forEach(id=>{const el=document.getElementById('btn-'+id);if(el)el.className='sb-btn';});
+  const _m2s={'easy':'easy','hard':'easy','ml2-easy':'ml2','ml2-hard':'ml2','all-easy':'all','all-hard':'all','mc-easy':'mc','mc-hard':'mc','ccw-easy':'ccw-g1','ccw-hard':'ccw-g1','wrong-easy':'wrong','wrong-hard':'wrong','cwrong-easy':'cwrong','cwrong-hard':'cwrong'};
+  for(let _g=1;_g<=10;_g++){_m2s[`ccw-g${_g}-easy`]=`ccw-g${_g}`;_m2s[`ccw-g${_g}-hard`]=`ccw-g${_g}`;}
+  const _secId=_m2s[m]||'easy';
+  const el=document.getElementById('btn-'+_secId);
+  if(el)el.classList.add(cls[m]||'active-easy');
   const lbl=document.getElementById('mode-label');
   const ml=MODE_LABELS[m];
   lbl.textContent=ml.text;
@@ -2757,7 +2799,13 @@ function revealAnswer(){
 function nextPuzzle(){idx++;roundNum++;loadPuzzle();}
 
 updateBadges();
-setMode('easy');
+pickSection('easy');
+if(window.innerWidth<=600){
+  setTimeout(()=>{
+    const card=document.getElementById('game-area');
+    if(card){const y=card.getBoundingClientRect().top+window.scrollY-60;window.scrollTo({top:y,behavior:'instant'});}
+  },50);
+}
 </script>
 </body>
 </html>
