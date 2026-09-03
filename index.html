@@ -2380,22 +2380,96 @@ function setDifficulty(d){
   document.getElementById('toggle-easy').classList.toggle('active',d==='easy');
   document.getElementById('toggle-hard').classList.toggle('active',d==='hard');
   document.getElementById('toggle-vhard').classList.toggle('active',d==='vhard');
-  applyMode();
+  // if mid-puzzle keep the same word/timer, just re-render display
+  if(current && phase!=='done'){
+    applyDifficultyDisplay();
+  } else {
+    applyMode();
+  }
+}
+
+function modeFromSectionDiff(sec,diff){
+  const sfx=diff==='vhard'?'-vhard':diff==='hard'?'-hard':'';
+  if(sec==='easy')return diff==='easy'?'easy':diff==='hard'?'hard':'easy-vhard';
+  if(sec==='ml2')return 'ml2'+sfx;
+  if(sec==='all')return 'all'+sfx;
+  if(sec==='mc')return 'mc'+sfx;
+  if(sec.startsWith('ccw-g'))return sec+sfx;
+  if(sec==='wrong')return 'wrong'+sfx;
+  if(sec==='cwrong')return 'cwrong'+sfx;
+  return 'easy';
 }
 
 function applyMode(){
-  const sec=currentSection,diff=currentDifficulty;
-  let m;
-  const sfx=diff==='vhard'?'-vhard':diff==='hard'?'-hard':'';
-  if(sec==='easy')m=diff==='easy'?'easy':diff==='hard'?'hard':'easy-vhard';
-  else if(sec==='ml2')m='ml2'+sfx;
-  else if(sec==='all')m='all'+sfx;
-  else if(sec==='mc')m='mc'+sfx;
-  else if(sec.startsWith('ccw-g'))m=sec+sfx;
-  else if(sec==='wrong')m='wrong'+sfx;
-  else if(sec==='cwrong')m='cwrong'+sfx;
-  else m='easy';
-  setMode(m);
+  setMode(modeFromSectionDiff(currentSection,currentDifficulty));
+}
+
+// Re-render display only — no timer/score/puzzle reset
+function applyDifficultyDisplay(){
+  const newMode=modeFromSectionDiff(currentSection,currentDifficulty);
+  // update mode label
+  const ml=MODE_LABELS[newMode];
+  if(ml){
+    const lbl=document.getElementById('mode-label');
+    lbl.textContent=ml.text;
+    lbl.className=ml.cls;
+  }
+  // update sidebar highlight
+  const cls={
+    'easy':'active-easy','hard':'active-hard','easy-vhard':'active-wrong-hard',
+    'mc-easy':'active-mc-easy','mc-hard':'active-mc-hard','mc-vhard':'active-wrong-hard',
+    'ml2-easy':'active-easy','ml2-hard':'active-hard','ml2-vhard':'active-wrong-hard',
+    'all-easy':'active-mc-easy','all-hard':'active-mc-hard','all-vhard':'active-wrong-hard',
+    'ccw-easy':'active-mc-hard','ccw-hard':'active-mc-hard','ccw-vhard':'active-wrong-hard',
+    'wrong-easy':'active-wrong-easy','wrong-hard':'active-wrong-hard','wrong-vhard':'active-wrong-hard',
+    'cwrong-easy':'active-wrong-hard','cwrong-hard':'active-wrong-hard','cwrong-vhard':'active-wrong-hard'
+  };
+  for(let _g=1;_g<=10;_g++){cls[`ccw-g${_g}-easy`]='active-mc-hard';cls[`ccw-g${_g}-hard`]='active-mc-hard';cls[`ccw-g${_g}-vhard`]='active-wrong-hard';}
+  // if no current puzzle, do full mode switch
+  if(!current){applyMode();return;}
+  // re-render puzzle display for new difficulty
+  mode=newMode;
+  const isCCW=!!ISCCW[newMode];
+  const isVHard=!!ISVHARD[newMode];
+  const isMC=!!ISMC[newMode];
+  const isWrong=!!(newMode.includes('wrong'));
+  const answers=isCCW?current.a:current[2];
+  const ff=isCCW?false:current[3];
+  document.getElementById('ans-meta').textContent=answers[0].length+' letters';
+  if(isCCW&&ISCRAM[newMode]){
+    document.getElementById('easy-section').style.display='none';
+    document.getElementById('hard-section').style.display='';
+    document.getElementById('puzzle-label').textContent='find the word — 9 letters';
+    document.getElementById('scrambled-display').textContent=scramble(current.p);
+  } else if(isCCW){
+    document.getElementById('easy-section').style.display='';
+    document.getElementById('hard-section').style.display='none';
+    document.getElementById('puzzle-label').textContent='unscramble the word';
+    document.getElementById('base-display').textContent=scramble(current.w);
+  } else if(isVHard){
+    document.getElementById('easy-section').style.display='none';
+    document.getElementById('hard-section').style.display='';
+    document.getElementById('puzzle-label').textContent='find the word — 9 letters';
+    const _answerWord=answers[0].toUpperCase();
+    const _padded=pad9(_answerWord);
+    document.getElementById('scrambled-display').textContent=scramble(_padded);
+  } else if(!ISCRAM[newMode]){
+    document.getElementById('easy-section').style.display='';
+    document.getElementById('hard-section').style.display='none';
+    document.getElementById('puzzle-label').textContent=ff?'this word is a false friend:':'base word + new letter';
+    if(ff){
+      document.getElementById('base-display').textContent=current[0].toUpperCase();
+    } else {
+      const nlClass=isMC&&!isWrong?'nl-purple':'nl';
+      const badges=current[1].toUpperCase().split("").map(l=>`<span class="${nlClass}">${l}</span>`).join('');
+      document.getElementById('base-display').innerHTML=current[0].toUpperCase()+' + '+badges;
+    }
+  } else {
+    document.getElementById('easy-section').style.display='none';
+    document.getElementById('hard-section').style.display='';
+    document.getElementById('puzzle-label').textContent=ff?'unscramble — false friend':'unscramble all letters';
+    document.getElementById('scrambled-display').textContent=scramble(current[0]+current[1]);
+  }
 }
 
 function filterValid(arr){
