@@ -2389,7 +2389,7 @@ function setDifficulty(d){
 }
 
 function modeFromSectionDiff(sec,diff){
-  const sfx=diff==='vhard'?'-vhard':diff==='hard'?'-hard':'';
+  const sfx=diff==='vhard'?'-vhard':diff==='hard'?'-hard':'-easy';
   if(sec==='easy')return diff==='easy'?'easy':diff==='hard'?'hard':'easy-vhard';
   if(sec==='ml2')return 'ml2'+sfx;
   if(sec==='all')return 'all'+sfx;
@@ -2650,8 +2650,8 @@ function setMode(m){
   for(let _g=1;_g<=10;_g++){cls[`ccw-g${_g}-easy`]='active-mc-hard';cls[`ccw-g${_g}-hard`]='active-mc-hard';}
   const _allBtns=['easy','ml2','all','mc','wrong','cwrong',...Array.from({length:10},(_,i)=>`ccw-g${i+1}`)];
   _allBtns.forEach(id=>{const el=document.getElementById('btn-'+id);if(el)el.className='sb-btn';});
-  const _m2s={'easy':'easy','hard':'easy','ml2-easy':'ml2','ml2-hard':'ml2','all-easy':'all','all-hard':'all','mc-easy':'mc','mc-hard':'mc','ccw-easy':'ccw-g1','ccw-hard':'ccw-g1','wrong-easy':'wrong','wrong-hard':'wrong','cwrong-easy':'cwrong','cwrong-hard':'cwrong'};
-  for(let _g=1;_g<=10;_g++){_m2s[`ccw-g${_g}-easy`]=`ccw-g${_g}`;_m2s[`ccw-g${_g}-hard`]=`ccw-g${_g}`;}
+  const _m2s={'easy':'easy','hard':'easy','easy-vhard':'easy','ml2-easy':'ml2','ml2-hard':'ml2','ml2-vhard':'ml2','all-easy':'all','all-hard':'all','all-vhard':'all','mc-easy':'mc','mc-hard':'mc','mc-vhard':'mc','ccw-easy':'ccw-g1','ccw-hard':'ccw-g1','ccw-vhard':'ccw-g1','wrong-easy':'wrong','wrong-hard':'wrong','wrong-vhard':'wrong','cwrong-easy':'cwrong','cwrong-hard':'cwrong','cwrong-vhard':'cwrong'};
+  for(let _g=1;_g<=10;_g++){_m2s[`ccw-g${_g}-easy`]=`ccw-g${_g}`;_m2s[`ccw-g${_g}-hard`]=`ccw-g${_g}`;_m2s[`ccw-g${_g}-vhard`]=`ccw-g${_g}`;}
   const _secId=_m2s[m]||'easy';
   const el=document.getElementById('btn-'+_secId);
   if(el)el.classList.add(cls[m]||'active-easy');
