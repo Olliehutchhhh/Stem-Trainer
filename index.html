@@ -55,18 +55,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 }
 #sidebar.open #sidebar-toggle-icon{transform:rotate(180deg);}
 #sidebar-content{
-  padding:12px 10px;overflow-y:auto;flex:1;
+  padding:12px 10px;overflow-y:auto;overflow-x:hidden;flex:1;
   opacity:0;transition:opacity 0.15s;pointer-events:none;
 }
 #sidebar.open #sidebar-content{opacity:1;pointer-events:all;transition-delay:0.1s;}
-.sb-section{font-size:0.72rem;color:var(--text);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;padding:10px 8px 6px;white-space:nowrap;}
+.sb-section{font-size:0.72rem;color:var(--text);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;padding:10px 8px 6px;white-space:normal;}
 .sb-section:first-child{padding-top:4px;}
 .sb-btn{
   display:block;width:100%;padding:9px 10px;
   border-radius:8px;border:1px solid transparent;
   background:transparent;color:var(--muted2);
   cursor:pointer;font-family:var(--mono);font-size:0.72rem;
-  text-align:left;white-space:nowrap;
+  text-align:left;white-space:normal;
   transition:all 0.15s;margin-bottom:4px;
   line-height:1.4;
 }
